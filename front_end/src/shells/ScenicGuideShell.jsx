@@ -8,6 +8,8 @@ import {
   IconButton,
   TextField,
   Tooltip,
+  Tabs,
+  Tab,
 } from '@mui/material';
 import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
 import CameraAltRoundedIcon from '@mui/icons-material/CameraAltRounded';
@@ -18,6 +20,8 @@ import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import RouteRoundedIcon from '@mui/icons-material/RouteRounded';
 import TravelExploreRoundedIcon from '@mui/icons-material/TravelExploreRounded';
 import WindowTitleBar from '../components/window/WindowTitleBar.jsx';
+import RoutePlannerPanel from '../components/scenic/RoutePlannerPanel.jsx';
+import RouteResultCard from '../components/scenic/RouteResultCard.jsx';
 import { desktopBridge } from '../services/desktopBridge.js';
 import './ScenicGuideShell.css';
 
@@ -48,6 +52,8 @@ export default function ScenicGuideShell({
   const [askingQuestion, setAskingQuestion] = useState(false);
   const [answerResult, setAnswerResult] = useState(initialAnswerResult);
   const [feedback, setFeedback] = useState(null);
+  const [currentTab, setCurrentTab] = useState('qa');
+  const [routeData, setRouteData] = useState(null);
 
   const imported = hasImportedOfficialData(manifest);
   const summary = manifest?.importSummary || {};
@@ -187,6 +193,24 @@ export default function ScenicGuideShell({
     });
   }, []);
 
+  const handleRouteGenerated = useCallback((data) => {
+    setRouteData(data);
+    setFeedback({
+      severity: 'success',
+      text: '路线推荐已生成！',
+    });
+  }, []);
+
+  const handleRouteReset = useCallback(() => {
+    setRouteData(null);
+    setFeedback(null);
+  }, []);
+
+  const handleTabChange = useCallback((event, newValue) => {
+    setCurrentTab(newValue);
+    setFeedback(null);
+  }, []);
+
   return (
     <Box className="scenic-guide-shell">
       {desktopMode && (
@@ -248,7 +272,18 @@ export default function ScenicGuideShell({
           ) : null}
         </Box>
 
+        {/* Tab标签页 */}
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={currentTab} onChange={handleTabChange}>
+            <Tab label="问答" value="qa" />
+            <Tab label="路线推荐" value="route" />
+          </Tabs>
+        </Box>
+
         <Box className="scenic-guide-content">
+          {/* 问答内容 */}
+          {currentTab === 'qa' && (
+            <>
           <section className="scenic-guide-stage" aria-label="数字人导览台">
             <Box className="scenic-guide-avatar-panel">
               <Box className="scenic-guide-avatar" aria-hidden="true">
@@ -425,6 +460,25 @@ export default function ScenicGuideShell({
               </Box>
             </section>
           </aside>
+            </>
+          )}
+
+          {/* 路线推荐内容 */}
+          {currentTab === 'route' && (
+            <Box sx={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
+              {!routeData ? (
+                <RoutePlannerPanel
+                  onRouteGenerated={handleRouteGenerated}
+                  onRouteReset={handleRouteReset}
+                />
+              ) : (
+                <RouteResultCard
+                  routeData={routeData}
+                  onReset={handleRouteReset}
+                />
+              )}
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>

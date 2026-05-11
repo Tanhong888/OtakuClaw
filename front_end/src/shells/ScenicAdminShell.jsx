@@ -7,6 +7,8 @@ import {
   CircularProgress,
   IconButton,
   Tooltip,
+  Tabs,
+  Tab,
 } from '@mui/material';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
@@ -17,6 +19,9 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import TravelExploreRoundedIcon from '@mui/icons-material/TravelExploreRounded';
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
 import WindowTitleBar from '../components/window/WindowTitleBar.jsx';
+import AnalyticsDashboard from '../components/scenic/AnalyticsDashboard.jsx';
+import ScenicBigScreen from '../components/scenic/ScenicBigScreen.jsx';
+import EvalCenter from '../components/scenic/EvalCenter.jsx';
 import { desktopBridge } from '../services/desktopBridge.js';
 import { hasImportedOfficialData } from './ScenicGuideShell.jsx';
 import './ScenicAdminShell.css';
@@ -54,6 +59,7 @@ export default function ScenicAdminShell({
   const [loading, setLoading] = useState(true);
   const [importing, setImporting] = useState(false);
   const [feedback, setFeedback] = useState(null);
+  const [currentTab, setCurrentTab] = useState('import');
 
   const imported = hasImportedOfficialData(manifest);
   const summary = manifest?.importSummary || {};
@@ -161,6 +167,11 @@ export default function ScenicAdminShell({
     }
   }, []);
 
+  const handleTabChange = useCallback((event, newValue) => {
+    setCurrentTab(newValue);
+    setFeedback(null);
+  }, []);
+
   return (
     <Box className="scenic-admin-shell">
       {desktopMode && (
@@ -219,7 +230,7 @@ export default function ScenicAdminShell({
             icon={loading ? <CircularProgress size={18} /> : imported ? <CheckCircleRoundedIcon /> : <DatasetRoundedIcon />}
             className="scenic-admin-alert"
           >
-            {imported ? '官方资料与知识库已就绪' : '请导入比赛官方资料包'}
+            {imported ? '官方资���与知识库已就绪' : '请导入比赛官方资料包'}
           </Alert>
           {feedback?.text ? (
             <Alert severity={feedback.severity || 'info'} className="scenic-admin-feedback">
@@ -228,6 +239,19 @@ export default function ScenicAdminShell({
           ) : null}
         </Box>
 
+        {/* Tab标签页 */}
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+          <Tabs value={currentTab} onChange={handleTabChange}>
+            <Tab label="数据源导入" value="import" />
+            <Tab label="数据分析" value="analytics" />
+            <Tab label="数据大屏" value="bigscreen" />
+            <Tab label="评测中心" value="eval" />
+          </Tabs>
+        </Box>
+
+        {/* Tab内容 */}
+        {currentTab === 'import' && (
+          <>
         <section className="scenic-admin-metrics" aria-label="后台摘要">
           {metrics.map((metric) => (
             <Box className="scenic-admin-metric" key={metric.key}>
@@ -294,6 +318,17 @@ export default function ScenicAdminShell({
             </Box>
           </section>
         </Box>
+          </>
+        )}
+
+        {/* 数据分析 */}
+        {currentTab === 'analytics' && <AnalyticsDashboard />}
+
+        {/* 数据大屏 */}
+        {currentTab === 'bigscreen' && <ScenicBigScreen />}
+
+        {/* 评测中心 */}
+        {currentTab === 'eval' && <EvalCenter />}
       </Box>
     </Box>
   );
