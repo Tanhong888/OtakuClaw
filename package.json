@@ -97,6 +97,7 @@
   },
   "dependencies": {
     "electron-updater": "^6.8.3",
+    "recharts": "^3.8.1",
     "ws": "^8.19.0"
   }
 }
