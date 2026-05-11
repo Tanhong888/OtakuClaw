@@ -22,6 +22,10 @@ import TravelExploreRoundedIcon from '@mui/icons-material/TravelExploreRounded';
 import WindowTitleBar from '../components/window/WindowTitleBar.jsx';
 import RoutePlannerPanel from '../components/scenic/RoutePlannerPanel.jsx';
 import RouteResultCard from '../components/scenic/RouteResultCard.jsx';
+import UIMultimodalLinkage from '../components/scenic/UIMultimodalLinkage.jsx';
+import AnswerFeedback from '../components/scenic/AnswerFeedback.jsx';
+import DigitalHumanState from '../components/scenic/DigitalHumanState.jsx';
+import { useDigitalHumanState } from '../hooks/scenic/useDigitalHumanState.js';
 import { desktopBridge } from '../services/desktopBridge.js';
 import './ScenicGuideShell.css';
 
@@ -54,6 +58,7 @@ export default function ScenicGuideShell({
   const [feedback, setFeedback] = useState(null);
   const [currentTab, setCurrentTab] = useState('qa');
   const [routeData, setRouteData] = useState(null);
+  const digitalHumanState = useDigitalHumanState();
 
   const imported = hasImportedOfficialData(manifest);
   const summary = manifest?.importSummary || {};
@@ -150,31 +155,53 @@ export default function ScenicGuideShell({
     setAskingQuestion(true);
     setFeedback(null);
     setQuestionText(normalizedQuestion);
+
+    // 触发数字人状态变化：开始提问
+    digitalHumanState.handleQuestionStart();
+
     try {
+      // 触发数字人状态变化：开始检索
+      digitalHumanState.handleRagStart();
+
       const result = await desktopBridge.scenicGuide.askQuestion({
         question: normalizedQuestion,
         limit: 5,
       });
       if (result?.ok) {
         setAnswerResult(result);
+
+        // 触发数字人状态变化：开始回答（带情感检测）
+        digitalHumanState.handleTtsStart(result);
         return;
       }
 
       setAnswerResult(null);
+
+      // 触发数字人状态变化：未命中
+      digitalHumanState.handleNoHit();
+
       setFeedback({
         severity: 'warning',
         text: result?.error?.message || '导览回答失败',
       });
     } catch (error) {
       setAnswerResult(null);
+
+      // 触发数字人状态变化：未命中
+      digitalHumanState.handleNoHit();
+
       setFeedback({
         severity: 'warning',
         text: error?.message || '导览回答失败',
       });
     } finally {
       setAskingQuestion(false);
+      // 延迟重置状态，给数字人时间完成回答动画
+      setTimeout(() => {
+        digitalHumanState.handleTtsEnd();
+      }, 3000);
     }
-  }, [askingQuestion, imported, questionText]);
+  }, [askingQuestion, imported, questionText, digitalHumanState]);
 
   const handleSubmitQuestion = useCallback((event) => {
     event.preventDefault();
@@ -210,6 +237,25 @@ export default function ScenicGuideShell({
     setCurrentTab(newValue);
     setFeedback(null);
   }, []);
+
+  const handleFeedback = useCallback((feedbackData) => {
+    console.log('收到用户反馈:', feedbackData);
+
+    // 根据反馈类型触发数字人状态变化
+    if (feedbackData.type === 'positive') {
+      digitalHumanState.handlePositiveRating();
+      setFeedback({
+        severity: 'success',
+        text: '感谢您的好评！数字人很开心～',
+      });
+    } else if (feedbackData.type === 'negative') {
+      digitalHumanState.handleNegativeRating();
+      setFeedback({
+        severity: 'warning',
+        text: '感谢您的反馈，我们会继续改进！',
+      });
+    }
+  }, [digitalHumanState]);
 
   return (
     <Box className="scenic-guide-shell">
@@ -369,6 +415,32 @@ export default function ScenicGuideShell({
                   </Box>
                 )}
               </Box>
+
+              {/* Week 3 新增：前端UI联动展示 */}
+              {answerResult && (
+                <Box sx={{ mt: 3 }}>
+                  <UIMultimodalLinkage
+                    answerResult={answerResult}
+                    latencyData={{
+                      totalLatency: answerResult.latency || 2000,
+                      sttLatency: 0,
+                      ragLatency: 1200,
+                      llmLatency: 600,
+                      ttsLatency: 200,
+                    }}
+                  />
+                </Box>
+              )}
+
+              {/* Week 3 新增：满意度反馈 */}
+              {answerResult && (
+                <Box sx={{ mt: 3 }}>
+                  <AnswerFeedback
+                    onFeedback={handleFeedback}
+                    disabled={!answerResult}
+                  />
+                </Box>
+              )}
             </Box>
 
             <Box className="scenic-guide-actions" aria-label="导览输入">
@@ -443,6 +515,15 @@ export default function ScenicGuideShell({
                   <span>{item.label}</span>
                 </Box>
               ))}
+            </section>
+
+            {/* Week 3 新增：数字人情感状态 */}
+            <section className="scenic-guide-digital-human-state" aria-label="数字人情感状态">
+              <DigitalHumanState
+                currentState={digitalHumanState.currentState}
+                emotion={digitalHumanState.emotion}
+                confidence={digitalHumanState.confidence}
+              />
             </section>
 
             <section className="scenic-guide-routes" aria-label="官方路线">

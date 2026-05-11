@@ -101,7 +101,7 @@ const LatencyMonitor = () => {
             📊 实时问答延迟监控
           </Typography>
           <Typography variant="caption" color="textSecondary" sx={{ ml: 2 }}>
-            监控ASR/RAG/LLM/TTS各环节延迟，确保<5秒达标
+            监控ASR/RAG/LLM/TTS各环节延迟，确保{'<5秒'}达标
           </Typography>
         </Box>
         <Chip
@@ -239,7 +239,7 @@ const LatencyMonitor = () => {
       <Box sx={{ mt: 3, p: 2, backgroundColor: '#e3f2fd', borderRadius: 2 }}>
         <Typography variant="caption" color="primary">
           ℹ️ 当前显示的是Mock数据，实际使用时将从IPC接口获取真实的延迟数据。
-          此仪表盘用于证明系统延迟<5秒达标，是比赛核心攻坚指标之一。
+          此仪表盘用于证明系统延迟{'<5秒'}达标，是比赛核心攻坚指标之一。
         </Typography>
       </Box>
     </Box>

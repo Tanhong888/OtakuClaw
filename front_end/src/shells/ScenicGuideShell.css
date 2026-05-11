@@ -435,3 +435,22 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Week 3 新增：数字人情感状态样式 */
+.scenic-guide-digital-human-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(30, 83, 98, 0.16);
+  background: rgba(255, 255, 255, 0.84);
+  overflow: auto;
+  max-height: 600px;
+}
+
+/* Week 3 新增：前端UI联动和满意度反馈容器样式 */
+.scenic-guide-stage .MuiBox-root {
+  border-radius: 8px;
+}
