@@ -15,7 +15,6 @@ import {
   Speed as SpeedIcon,
   CheckCircle as CheckCircleIcon,
 } from '@mui/icons-material';
-import { Live2DViewer } from '../live2d/Live2DViewer.jsx';
 import LatencyMonitor from './LatencyMonitor.jsx';
 
 const UIMultimodalLinkage = ({ answerResult, latencyData }) => {
