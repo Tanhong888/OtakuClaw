@@ -9,6 +9,9 @@
   "scripts": {
     "frontend:dev": "pnpm --dir front_end run dev --host 127.0.0.1 --port 3000 --strictPort",
     "frontend:build": "pnpm --dir front_end run build",
+    "frontend:dev:web": "pnpm --dir front_end run dev",
+    "frontend:build:web": "node scripts/build-web.js",
+    "frontend:preview:web": "pnpm --dir front_end run preview --port 4173",
     "desktop:dev:renderer": "pnpm run frontend:dev",
     "desktop:dev:electron": "node desktop/electron/scripts/waitForDevServer.js && cross-env ELECTRON_DEV_SERVER_URL=http://127.0.0.1:3000 electron .",
     "desktop:dev": "concurrently -k \"pnpm run desktop:dev:renderer\" \"pnpm run desktop:dev:electron\"",
