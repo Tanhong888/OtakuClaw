@@ -165,11 +165,21 @@ class MultiRecallRAG {
           );
 
           if (matchedSpot) {
+            // Try to get the knowledge block text for better content
+            let text = matchedSpot.introduction || matchedSpot.description || matchedSpot.name || '';
+            if (this.knowledgeStore && typeof this.knowledgeStore.getKnowledgeBase === 'function') {
+              const kb = this.knowledgeStore.getKnowledgeBase();
+              const block = kb.knowledgeBlocks?.find(b => b.entityId === matchedSpot.spotId && b.contentType === 'spot');
+              if (block && block.text) {
+                text = block.text;
+              }
+            }
+
             return {
               hits: [{
-                blockId: matchedSpot.spotId,
+                blockId: `official:spot:${matchedSpot.spotId}`,
                 title: matchedSpot.name || matchedSpot.spotId,
-                text: matchedSpot.introduction || matchedSpot.description || matchedSpot.name || '',
+                text,
                 contentType: 'spot',
                 entityId: matchedSpot.spotId,
                 score: 100,
@@ -209,11 +219,21 @@ class MultiRecallRAG {
       const containsMatch = item.name.length > 2 && normalizedQuery.includes(item.name);
 
       if (exactMatch || aliasMatch || containsMatch) {
+        // Try to get the knowledge block text for better content
+        let text = item.spot.introduction || item.spot.description || item.spot.name || '';
+        if (this.knowledgeStore && typeof this.knowledgeStore.getKnowledgeBase === 'function') {
+          const kb = this.knowledgeStore.getKnowledgeBase();
+          const block = kb.knowledgeBlocks?.find(b => b.entityId === item.spot.spotId && b.contentType === 'spot');
+          if (block && block.text) {
+            text = block.text;
+          }
+        }
+
         return {
           hits: [{
-            blockId: item.spot.spotId,
+            blockId: `official:spot:${item.spot.spotId}`,
             title: item.spot.name,
-            text: item.spot.introduction || item.spot.description || item.spot.name || '',
+            text,
             contentType: 'spot',
             entityId: item.spot.spotId,
             score: exactMatch ? 98 : 85,
@@ -255,7 +275,7 @@ class MultiRecallRAG {
           if (matchedRoute) {
             return {
               hits: [{
-                blockId: matchedRoute.routeId || `route-${Date.now()}`,
+                blockId: `official:route:${matchedRoute.routeId || 'default'}`,
                 title: matchedRoute.name,
                 text: matchedRoute.description || matchedRoute.name || '',
                 contentType: 'route',

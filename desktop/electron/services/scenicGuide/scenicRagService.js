@@ -31,7 +31,7 @@ function getTextLines(value = '') {
 }
 
 function stripLeadingLabel(line = '') {
-  return normalizeText(line).replace(/^(点位|路线|位置|参数|核心功能|文化内涵|介绍|游览亮点|开放信息|提示|推荐时长|途经点位|兴趣标签|适合人群)：/, '');
+  return normalizeText(line).replace(/^(点位|路线|位置|参数|建筑|景观参数|核心功能|文化内涵|介绍|游览亮点|开放信息|提示|推荐时长|途经点位|兴趣标签|适合人群)：/, '');
 }
 
 function findLabeledValue(text = '', labels = []) {
@@ -54,6 +54,7 @@ function getUsefulLines(hit = {}, limit = 4) {
 
 function getSpotLines(hit = {}) {
   const prioritized = [
+    findLabeledValue(hit.text, ['参数']),
     findLabeledValue(hit.text, ['介绍']),
     findLabeledValue(hit.text, ['核心功能']),
     findLabeledValue(hit.text, ['文化内涵']),
@@ -200,6 +201,14 @@ class ScenicRagService {
     this.interactionLogStore = interactionLogStore;
     this.enableMultiRecall = enableMultiRecall;
     this.multiRecallRag = enableMultiRecall ? new MultiRecallRAG({ knowledgeStore, searchIndex }) : null;
+    this.initialized = false;
+  }
+
+  async init() {
+    if (this.multiRecallRag && !this.initialized) {
+      await this.multiRecallRag.warmupCache();
+      this.initialized = true;
+    }
   }
 
   getKnowledgeSummary() {
@@ -215,6 +224,11 @@ class ScenicRagService {
     inputType = 'text',
     latency = {},
   } = {}) {
+    // Auto-initialize if not already done
+    if (!this.initialized && this.multiRecallRag) {
+      await this.init();
+    }
+
     const startTime = Date.now();
     const normalizedQuestion = normalizeText(question);
     if (!normalizedQuestion) {

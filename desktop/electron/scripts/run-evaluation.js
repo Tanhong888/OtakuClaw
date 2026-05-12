@@ -14,8 +14,8 @@ const {
   ScenicKnowledgeStore,
 } = require('../services/scenicGuide/scenicKnowledgeStore');
 const {
-  ScenicSearchIndex,
-} = require('../services/scenicGuide/scenicSearchIndex');
+  PerformanceOptimizedIndex,
+} = require('../services/scenicGuide/performanceOptimizedIndex');
 const {
   ScenicRagService,
 } = require('../services/scenicGuide/scenicRagService');
@@ -88,11 +88,10 @@ async function initialize() {
   }
 
   // Initialize search index
-  searchIndex = new ScenicSearchIndex({
+  searchIndex = new PerformanceOptimizedIndex({
     knowledgeStore,
-    useOptimizedIndex: true,
   });
-  await searchIndex.init();
+  // PerformanceOptimizedIndex doesn't require init(), it builds on demand
   console.log('✓ Search index initialized');
 
   // Initialize interaction log store
