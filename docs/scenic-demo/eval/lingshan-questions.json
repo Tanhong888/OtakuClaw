@@ -1,0 +1,801 @@
+{
+  "meta": {
+    "version": "v1.0",
+    "total": 100,
+    "targetAccuracy": "≥90%",
+    "created": "2026-05-10",
+    "description": "灵山胜境AI数字人导览系统评测题集"
+  },
+  "questions": [
+    {
+      "id": "LS-001-01",
+      "question": "灵山大佛有什么特色？",
+      "category": "点位事实",
+      "expected": ["88米", "青铜", "佛体", "莲花座", "释迦牟尼"],
+      "prohibited": ["99米", "黄金", "纯金"],
+      "source": "LS-001",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-001-02",
+      "question": "灵山大佛有多高？",
+      "category": "点位事实",
+      "expected": ["88米", "八十八米"],
+      "prohibited": ["99米", "100米"],
+      "source": "LS-001",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-001-03",
+      "question": "灵山大佛是什么材质的？",
+      "category": "点位事实",
+      "expected": ["青铜", "铜"],
+      "prohibited": ["黄金", "纯金", "石雕"],
+      "source": "LS-001",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-001-04",
+      "question": "灵山大佛供奉的是谁？",
+      "category": "点位事实",
+      "expected": ["释迦牟尼", "佛祖", "如来"],
+      "prohibited": ["观音", "弥勒"],
+      "source": "LS-001",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-001-05",
+      "question": "灵山大佛的莲花座有多高？",
+      "category": "点位事实",
+      "expected": ["莲花座", "基座"],
+      "prohibited": [],
+      "source": "LS-001",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-002-01",
+      "question": "九龙灌浴是什么？",
+      "category": "点位事实",
+      "expected": ["��乐喷泉", "动态", "九龙", "太子佛"],
+      "prohibited": ["静止", "雕塑"],
+      "source": "LS-002",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-002-02",
+      "question": "九龙灌浴的表演有什么特色？",
+      "category": "点位事实",
+      "expected": ["音乐", "灯光", "动态", "升降"],
+      "prohibited": [],
+      "source": "LS-002",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-002-03",
+      "question": "九龙灌浴每天几点表演？",
+      "category": "点位事实",
+      "expected": ["演出", "表演", "时间"],
+      "prohibited": [],
+      "source": "LS-002",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-003-01",
+      "question": "祥符禅寺有什么历史？",
+      "category": "点位事实",
+      "expected": ["千年古刹", "历史", "寺庙"],
+      "prohibited": ["新建", "现代"],
+      "source": "LS-003",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-003-02",
+      "question": "祥符禅寺是做什么的？",
+      "category": "点位事实",
+      "expected": ["佛教", "寺庙", "禅宗"],
+      "prohibited": [],
+      "source": "LS-003",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-004-01",
+      "question": "灵山梵宫为什么叫佛教艺术的卢浮宫？",
+      "category": "点位事实",
+      "expected": ["艺术", "珍品", "建筑", "文化"],
+      "prohibited": [],
+      "source": "LS-004",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-004-02",
+      "question": "灵山梵宫有什么看点？",
+      "category": "点位事实",
+      "expected": ["建筑", "艺术", "文化", "珍宝"],
+      "prohibited": [],
+      "source": "LS-004",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-004-03",
+      "question": "灵山梵宫的建筑风格是什么？",
+      "category": "点位事实",
+      "expected": ["佛教", "传统", "现代", "结合"],
+      "prohibited": [],
+      "source": "LS-004",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-005-01",
+      "question": "五印坛城是做什么的？",
+      "category": "点位事实",
+      "expected": ["藏传佛教", "文化", "展示"],
+      "prohibited": [],
+      "source": "LS-005",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-005-02",
+      "question": "五印坛城展示什么文化？",
+      "category": "点位事实",
+      "expected": ["藏传佛教", "藏族", "文化"],
+      "prohibited": ["汉传佛教"],
+      "source": "LS-005",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-006-01",
+      "question": "曼飞龙塔有什么特色？",
+      "category": "点位事实",
+      "expected": ["建筑", "风格", "塔"],
+      "prohibited": [],
+      "source": "LS-006",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-007-01",
+      "question": "杏坛广场是做什么的？",
+      "category": "点位事实",
+      "expected": ["广场", "景观", "活动"],
+      "prohibited": [],
+      "source": "LS-007",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-008-01",
+      "question": "佛教文化博物馆有什么展品？",
+      "category": "点位事实",
+      "expected": ["佛教", "文化", "文物", "艺术品"],
+      "prohibited": [],
+      "source": "LS-008",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-009-01",
+      "question": "动感影院是什么体验？",
+      "category": "点位事实",
+      "expected": ["沉浸式", "4D", "体验"],
+      "prohibited": [],
+      "source": "LS-009",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-010-01",
+      "question": "梵宫音乐喷泉有什么表演？",
+      "category": "点位事实",
+      "expected": ["音乐", "灯光", "喷泉", "表演"],
+      "prohibited": [],
+      "source": "LS-010",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-011-01",
+      "question": "Kids乐园适合什么人群？",
+      "category": "点位事实",
+      "expected": ["儿童", "亲子", "小孩", "孩子"],
+      "prohibited": ["成人"],
+      "source": "LS-011",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-012-01",
+      "question": "灵山文化广场有什么活动？",
+      "category": "点位事实",
+      "expected": ["文化", "活动", "展示"],
+      "prohibited": [],
+      "source": "LS-012",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-013-01",
+      "question": "佛教艺术馆有什么展品？",
+      "category": "点位事实",
+      "expected": ["佛教", "艺术", "珍品", "文物"],
+      "prohibited": [],
+      "source": "LS-013",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-014-01",
+      "question": "般若堂提供什么体验？",
+      "category": "点位事实",
+      "expected": ["禅修", "体验", "佛教"],
+      "prohibited": [],
+      "source": "LS-014",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-015-01",
+      "question": "无尽意轩是什么地方？",
+      "category": "点位事实",
+      "expected": ["展览", "艺术", "文化"],
+      "prohibited": [],
+      "source": "LS-015",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "LS-016-01",
+      "question": "感恩广场有什么特色？",
+      "category": "点位事实",
+      "expected": ["感恩", "文化", "主题"],
+      "prohibited": [],
+      "source": "LS-016",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NH-001-01",
+      "question": "拈花湾有什么特色？",
+      "category": "点位事实",
+      "expected": ["禅意", "小镇", "度假", "休闲"],
+      "prohibited": [],
+      "source": "NH-001",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NH-001-02",
+      "question": "拈花湾适合什么类型的游客？",
+      "category": "点位事实",
+      "expected": ["休闲", "度假", "放松", "慢生活"],
+      "prohibited": [],
+      "source": "NH-001",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NH-002-01",
+      "question": "拈花塔有什么特色？",
+      "category": "点位事实",
+      "expected": ["塔", "建筑", "地标"],
+      "prohibited": [],
+      "source": "NH-002",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NH-003-01",
+      "question": "五灯湖有什么表演？",
+      "category": "点位事实",
+      "expected": ["灯光", "表演", "秀"],
+      "prohibited": [],
+      "source": "NH-003",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NH-004-01",
+      "question": "梵天花海是什么季节最美？",
+      "category": "点位事实",
+      "expected": ["花", "季节", "景观"],
+      "prohibited": [],
+      "source": "NH-004",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NH-005-01",
+      "question": "一笑堂有什么特色？",
+      "category": "点位事实",
+      "expected": ["禅", "茶", "体验"],
+      "prohibited": [],
+      "source": "NH-005",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NH-006-01",
+      "question": "拈花客栈住宿条件怎么样？",
+      "category": "点位事实",
+      "expected": ["客栈", "住宿", "禅意"],
+      "prohibited": [],
+      "source": "NH-006",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-001",
+      "question": "灵山胜境的佛教文化有什么历史？",
+      "category": "历史文化",
+      "expected": ["佛教", "文化", "历史", "传统"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-002",
+      "question": "灵山胜境为什么是佛教圣地？",
+      "category": "历史文化",
+      "expected": ["佛教", "圣地", "文化", "传统"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-003",
+      "question": "灵山胜境的由来是什么？",
+      "category": "历史文化",
+      "expected": ["历史", "由来", "建立"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-004",
+      "question": "灵山胜境有哪些佛教文化活动？",
+      "category": "历史文化",
+      "expected": ["佛教", "文化", "活动", "法会"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-005",
+      "question": "灵山胜境的建筑有什么佛教特色？",
+      "category": "历史文化",
+      "expected": ["佛教", "建筑", "风格", "特色"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-006",
+      "question": "灵山胜境的核心文化价值是什么？",
+      "category": "历史文化",
+      "expected": ["佛教", "文化", "价值", "精神"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-007",
+      "question": "灵山胜境对佛教文化的传承有什么意义？",
+      "category": "历史文化",
+      "expected": ["传承", "文化", "佛教", "保护"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "CULTURE-008",
+      "question": "灵山胜境的建筑风格受什么影响？",
+      "category": "历史文化",
+      "expected": ["佛教", "传统", "文化", "建筑"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-001",
+      "question": "灵山胜境有哪些核心景点？",
+      "category": "核心景点",
+      "expected": ["灵山大佛", "祥符禅寺", "灵山梵宫"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-002",
+      "question": "第一次来灵山胜境应该看什么？",
+      "category": "核心景点",
+      "expected": ["灵山大佛", "核心", "必看"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-003",
+      "question": "灵山胜境最值得看的景点是什么？",
+      "category": "核心景点",
+      "expected": ["灵山大佛", "梵宫", "核心"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-004",
+      "question": "灵山胜境的标志性景点是什么？",
+      "category": "核心景点",
+      "expected": ["灵山大佛", "标志", "地标"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-005",
+      "question": "灵山胜境哪个景点适合拍照？",
+      "category": "核心景点",
+      "expected": ["拍照", "景点", "大佛", "梵宫"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-006",
+      "question": "灵山胜境的艺术珍品在哪里？",
+      "category": "核心景点",
+      "expected": ["梵宫", "博物馆", "艺术馆"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-007",
+      "question": "灵山胜境的自然风光怎么样？",
+      "category": "核心景点",
+      "expected": ["风景", "自然", "景观"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "SPOT-008",
+      "question": "灵山胜境的建筑有什么看点？",
+      "category": "核心景点",
+      "expected": ["建筑", "艺术", "特色"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-001",
+      "question": "历史文化爱好者路线有哪些景点？",
+      "category": "路线推荐",
+      "expected": ["历史文化", "路线", "景点"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-002",
+      "question": "自然风光爱好者路线怎么走？",
+      "category": "路线推荐",
+      "expected": ["自然风光", "路线", "游览"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-003",
+      "question": "亲子家庭路线适合什么人群？",
+      "category": "路线推荐",
+      "expected": ["亲子", "家庭", "儿童"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-004",
+      "question": "历史文化爱好者路线需要多长时间？",
+      "category": "路线推荐",
+      "expected": ["时间", "小时", "游览"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-005",
+      "question": "2小时快速游览怎么安排？",
+      "category": "路线推荐",
+      "expected": ["2小时", "路线", "景点"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-006",
+      "question": "半日游推荐走哪条路线？",
+      "category": "路线推荐",
+      "expected": ["半日", "路线", "推荐"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-007",
+      "question": "一日游能游完灵山胜境吗？",
+      "category": "路线推荐",
+      "expected": ["一日", "时间", "路线"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-008",
+      "question": "老人适合走哪条路线？",
+      "category": "路线推荐",
+      "expected": ["老人", "路线", "轻松"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-009",
+      "question": "情侣推荐什么路线？",
+      "category": "路线推荐",
+      "expected": ["情侣", "路线", "推荐"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "ROUTE-010",
+      "question": "喜欢拍照应该怎么安排路线？",
+      "category": "路线推荐",
+      "expected": ["拍照", "路线", "景点"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-001",
+      "question": "灵山胜境的门票价格是多少？",
+      "category": "门票与贴士",
+      "expected": ["门票", "价格", "票"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-002",
+      "question": "灵山胜境的开放时间是几点到几点？",
+      "category": "门票与贴士",
+      "expected": ["开放", "时间", "营业"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-003",
+      "question": "灵山胜境有停车场吗？",
+      "category": "门票与贴士",
+      "expected": ["停车", "停车场", "停车"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-004",
+      "question": "景区内有餐厅吗？",
+      "category": "门票与贴士",
+      "expected": ["餐厅", "餐饮", "吃饭"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-005",
+      "question": "灵山胜境需要买几个景点的门票？",
+      "category": "门票与贴士",
+      "expected": ["门票", "景点", "联票"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-006",
+      "question": "灵山胜境有讲解服务吗？",
+      "category": "门票与贴士",
+      "expected": ["讲解", "导游", "服务"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-007",
+      "question": "灵山胜境有什么注意事项？",
+      "category": "门票与贴士",
+      "expected": ["注意", "提示", "贴士"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-008",
+      "question": "什么季节去灵山胜境最好？",
+      "category": "门票与贴士",
+      "expected": ["季节", "最佳", "时间"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "medium",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-009",
+      "question": "灵山胜境需要玩多长时间？",
+      "category": "门票与贴士",
+      "expected": ["时间", "小时", "游玩"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "PRACTICAL-010",
+      "question": "灵山胜境有商店吗？",
+      "category": "门票与贴士",
+      "expected": ["商店", "购物", "纪念品"],
+      "prohibited": [],
+      "source": "官方指南",
+      "difficulty": "easy",
+      "noHitAllowed": false
+    },
+    {
+      "id": "NOHIT-001",
+      "question": "灵山胜境有缆车吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-002",
+      "question": "灵山胜境有玻璃栈道吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-003",
+      "question": "灵山胜境有温泉吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-004",
+      "question": "灵山胜境有滑雪场吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-005",
+      "question": "灵山胜境有游乐园吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-006",
+      "question": "灵山胜境的门票能网上买吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-007",
+      "question": "灵山胜境有夜场吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-008",
+      "question": "灵山胜境有酒店住宿吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-009",
+      "question": "灵山胜境今天人多吗？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    },
+    {
+      "id": "NOHIT-010",
+      "question": "灵山胜境明天天气怎么样？",
+      "category": "未收录问题",
+      "expected": [],
+      "prohibited": [],
+      "source": "",
+      "difficulty": "medium",
+      "noHitAllowed": true
+    }
+  ]
+}

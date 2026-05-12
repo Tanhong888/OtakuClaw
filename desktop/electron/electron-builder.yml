@@ -1,0 +1,138 @@
+# Electron Builder Configuration for OtakuClaw Desktop
+# Optimized for production builds of the Scenic Guide system
+
+appId: com.otakuclaw.desktop
+productName: OtakuClaw
+copyright: Copyright © 2025 OtakuClaw
+electronVersion: 36.2.1
+
+# Build directories
+directories:
+  buildResources: build
+  output: ../../release
+
+# ASAR packaging
+asar: true
+asarUnpack:
+  - desktop/electron/services/**/*.py
+  - desktop/electron/services/**/*.pyd
+  - desktop/electron/services/**/*.so
+  - desktop/electron/services/**/*.dll
+  - front_end/dist/assets/live2d/**/*
+
+# Files to include
+files:
+  - desktop/electron/**/*
+  - front_end/dist/**/*
+  - package.json
+  - LICENSE
+  - THIRD_PARTIES_NOTICES.md
+
+# Files to exclude
+extraFiles:
+  - from: ../..
+    to: .
+    filter:
+      - "**/*"
+
+# Exclude development files
+exclude:
+  - node_modules/**/*
+  - front_end/node_modules/**/*
+  - front_end/src/**/*
+  - front_end/**/*.map
+  - desktop/electron/tests/**/*
+  - desktop/electron/**/*.test.js
+  - desktop/electron/**/*.spec.js
+  - docs/**/*
+  - .git/**/*
+  - .github/**/*
+  - "*.md"
+  - "*.log"
+
+# Windows configuration
+win:
+  icon: desktop/electron/assets/icon.ico
+  artifactName: ${productName}-${version}-${arch}-setup.${ext}
+  target:
+    - target: nsis
+      arch:
+        - x64
+  # Windows-specific settings
+  fileAssociations:
+    - ext: lingshan
+      name: 灵山胜境资料包
+      description: 灵山胜境官方资料包
+      role: Editor
+
+# NSIS installer configuration
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: Always
+  createStartMenuShortcut: true
+  shortcutName: OtakuClaw
+  uninstallDisplayName: OtakuClaw
+  installerIcon: desktop/electron/assets/icon.ico
+  uninstallerIcon: desktop/electron/assets/icon.ico
+  license: LICENSE
+  # Include language files for Chinese support
+  include: build/installer.nsh
+
+# macOS configuration
+mac:
+  icon: desktop/electron/assets/icon.icns
+  artifactName: ${productName}-${version}-${arch}.${ext}
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+    - target: zip
+      arch:
+        - universal
+  hardenedRuntime: true
+  entitlements: desktop/electron/entitlements.mac.plist
+  entitlementsInherit: desktop/electron/entitlements.mac.inherit.plist
+  extendInfo:
+    NSMicrophoneUsageDescription: 需要麦克风权限来进行语音输入与语音对话。
+    NSCameraUsageDescription: 需要摄像头权限进行视频通话功能。
+    CFBundleName: OtakuClaw
+    CFBundleDisplayName: OtakuClaw
+    CFBundleVersion: 0.2.2
+
+# Linux configuration
+linux:
+  icon: desktop/electron/assets/icon.png
+  artifactName: ${productName}-${version}-${arch}.${ext}
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+  category: Education
+  description: OtakuClaw - AI Digital Tour Guide
+  maintainer: OtakuClaw
+
+# Publish configuration (for auto-updates)
+publish:
+  provider: github
+  owner: otakuclaw
+  repo: otakuclaw-desktop
+
+# Compression settings
+compression: maximum
+
+# Build optimization
+afterPack: ./scripts/afterPack.js
+afterSign: ./scripts/afterSign.js
+
+# WinCodeSign configuration (Windows code signing)
+winCodeSign:
+  certificateSha1: ${WINDOWS_CERT_SHA1}
+  signingHashAlgorithms:
+    - sha256
