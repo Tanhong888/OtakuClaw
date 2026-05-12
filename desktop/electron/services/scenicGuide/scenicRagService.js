@@ -1,6 +1,8 @@
 const crypto = require('node:crypto');
 
 const { ScenicSearchIndex } = require('./scenicSearchIndex');
+const { MultiRecallRAG } = require('./multiRecallRag');
+const { buildSystemPrompt, buildUserMessage, buildNoHitResponse } = require('./scenicGuidePrompt');
 
 const DEFAULT_LIMIT = 5;
 const DEFAULT_MIN_SCORE = 35;
@@ -190,9 +192,14 @@ class ScenicRagService {
   constructor({
     knowledgeStore = null,
     searchIndex = null,
+    interactionLogStore = null,
+    enableMultiRecall = true,
   } = {}) {
     this.knowledgeStore = knowledgeStore;
     this.searchIndex = searchIndex || new ScenicSearchIndex({ knowledgeStore });
+    this.interactionLogStore = interactionLogStore;
+    this.enableMultiRecall = enableMultiRecall;
+    this.multiRecallRag = enableMultiRecall ? new MultiRecallRAG({ knowledgeStore, searchIndex }) : null;
   }
 
   getKnowledgeSummary() {
@@ -205,7 +212,10 @@ class ScenicRagService {
     question = '',
     limit = DEFAULT_LIMIT,
     minScore = DEFAULT_MIN_SCORE,
+    inputType = 'text',
+    latency = {},
   } = {}) {
+    const startTime = Date.now();
     const normalizedQuestion = normalizeText(question);
     if (!normalizedQuestion) {
       return {
@@ -228,16 +238,31 @@ class ScenicRagService {
       };
     }
 
-    const searchResult = await this.searchIndex.search({
-      query: normalizedQuestion,
-      limit: normalizeLimit(limit),
-      minScore: Number.isFinite(minScore) ? minScore : DEFAULT_MIN_SCORE,
-    });
-    const hits = Array.isArray(searchResult?.hits) ? searchResult.hits : [];
+    let searchResult;
+    let hits = [];
+    let intent = { intent: 'general_inquiry', priority: 5, strategy: 'default' };
+
+    if (this.enableMultiRecall && this.multiRecallRag) {
+      searchResult = await this.multiRecallRag.search(normalizedQuestion);
+      hits = searchResult?.hits || [];
+      intent = searchResult?.intent || intent;
+    } else {
+      searchResult = await this.searchIndex.search({
+        query: normalizedQuestion,
+        limit: normalizeLimit(limit),
+        minScore: Number.isFinite(minScore) ? minScore : DEFAULT_MIN_SCORE,
+      });
+      hits = Array.isArray(searchResult?.hits) ? searchResult.hits : [];
+    }
+
     const answerResult = buildAnswer({ question: normalizedQuestion, hits });
     const sources = normalizeSources(hits);
+    const completeLatency = {
+      ...latency,
+      complete: Date.now() - startTime,
+    };
 
-    return {
+    const response = {
       ok: true,
       answerId: createAnswerId(normalizedQuestion, answerResult.answer),
       question: normalizedQuestion,
@@ -246,13 +271,34 @@ class ScenicRagService {
       confidence: answerResult.confidence,
       sources,
       hits,
+      intent: intent.intent,
       generatedAt: new Date().toISOString(),
       retrieval: {
         totalHits: Number.isFinite(searchResult?.totalHits) ? searchResult.totalHits : hits.length,
         queryTokens: Array.isArray(searchResult?.meta?.queryTokens) ? searchResult.meta.queryTokens : [],
         indexVersion: Number.isFinite(searchResult?.meta?.indexVersion) ? searchResult.meta.indexVersion : 0,
+        recallMethods: searchResult?.methods || [],
       },
+      latency: completeLatency,
     };
+
+    if (this.interactionLogStore) {
+      try {
+        await this.interactionLogStore.saveLog({
+          inputType,
+          question: normalizedQuestion,
+          intent: intent.intent,
+          sources: hits,
+          answer: answerResult.answer,
+          latency: completeLatency,
+          unmatched: answerResult.status === 'no_hit',
+        });
+      } catch (error) {
+        console.warn('Failed to save interaction log:', error);
+      }
+    }
+
+    return response;
   }
 }
 

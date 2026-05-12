@@ -34,6 +34,12 @@ const { OfficialDataImporter } = require('./services/scenicGuide/officialDataImp
 const { OfficialDataManifestStore } = require('./services/scenicGuide/officialDataManifestStore');
 const { ScenicKnowledgeStore } = require('./services/scenicGuide/scenicKnowledgeStore');
 const { ScenicRagService } = require('./services/scenicGuide/scenicRagService');
+const { InteractionLogStore } = require('./services/scenicGuide/interactionLogStore');
+const { VisitorAnalyticsService } = require('./services/scenicGuide/visitorAnalyticsService');
+const { MultiRecallRAG } = require('./services/scenicGuide/multiRecallRag');
+const { RoutePlannerService } = require('./services/scenicGuide/routePlannerService');
+const { ScenicEvalService } = require('./services/scenicGuide/scenicEvalService');
+const { createStreamingTTSService } = require('./services/voice/streamingTtsService');
 const { NanobotRuntimeManager } = require('./services/chat/nanobot/nanobotRuntimeManager');
 const { NanobotSkillsLibrary } = require('./services/chat/nanobot/nanobotSkillsLibrary');
 const { Live2DModelLibrary, MODEL_PROTOCOL } = require('./services/live2dModelLibrary');
@@ -90,6 +96,12 @@ let officialDataManifestStore = null;
 let scenicKnowledgeStore = null;
 let scenicRagService = null;
 let officialDataImporter = null;
+let interactionLogStore = null;
+let visitorAnalyticsService = null;
+let multiRecallRag = null;
+let routePlannerService = null;
+let scenicEvalService = null;
+let streamingTtsService = null;
 let windowModeManager = null;
 let trayManager = null;
 let live2dModelLibrary = null;
@@ -646,9 +658,48 @@ async function bootstrap() {
   await officialDataManifestStore.init();
   scenicKnowledgeStore = new ScenicKnowledgeStore({ app });
   await scenicKnowledgeStore.init();
-  scenicRagService = new ScenicRagService({
+
+  interactionLogStore = new InteractionLogStore({ app });
+  await interactionLogStore.init();
+
+  multiRecallRag = new MultiRecallRAG({
     knowledgeStore: scenicKnowledgeStore,
   });
+  await multiRecallRag.init();
+
+  visitorAnalyticsService = new VisitorAnalyticsService({
+    knowledgeStore: scenicKnowledgeStore,
+    interactionLogStore,
+  });
+  await visitorAnalyticsService.init();
+
+  routePlannerService = new RoutePlannerService({
+    knowledgeStore: scenicKnowledgeStore,
+  });
+  await routePlannerService.init();
+
+  scenicEvalService = new ScenicEvalService({
+    scenicRagService: null,
+    app,
+  });
+  await scenicEvalService.init();
+
+  scenicRagService = new ScenicRagService({
+    knowledgeStore: scenicKnowledgeStore,
+    interactionLogStore,
+    enableMultiRecall: true,
+  });
+
+  streamingTtsService = createStreamingTTSService({
+    ttsOptions: {
+      provider: process.env.VOICE_TTS_PROVIDER || 'dashscope',
+      apiKey: process.env.DASHSCOPE_API_KEY,
+    },
+  });
+
+  if (scenicEvalService) {
+    scenicEvalService.scenicRagService = scenicRagService;
+  }
   officialDataImporter = new OfficialDataImporter({
     manifestStore: officialDataManifestStore,
     knowledgeStore: scenicKnowledgeStore,
@@ -737,6 +788,12 @@ async function bootstrap() {
     officialDataImporter,
     scenicKnowledgeStore,
     scenicRagService,
+    interactionLogStore,
+    visitorAnalyticsService,
+    multiRecallRag,
+    routePlannerService,
+    scenicEvalService,
+    streamingTtsService,
   });
   disposeOfficeStateHandlers = registerOfficeStateIpc({
     ipcMain,
@@ -1183,6 +1240,10 @@ app.on('before-quit', () => {
   if (appUpdaterService) {
     appUpdaterService.dispose();
     appUpdaterService = null;
+  }
+  if (streamingTtsService) {
+    void streamingTtsService.dispose();
+    streamingTtsService = null;
   }
   pythonRuntimeManager = null;
   pythonEnvManager = null;
