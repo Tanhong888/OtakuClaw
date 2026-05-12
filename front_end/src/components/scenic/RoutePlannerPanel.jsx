@@ -25,6 +25,7 @@ import {
   Restaurant as RestaurantIcon,
   Groups as GroupsIcon
 } from '@mui/icons-material';
+import { desktopBridge } from '../../services/desktopBridge.js';
 
 const RoutePlannerPanel = ({ onRouteGenerated, onRouteReset }) => {
   // 表单状态
@@ -104,33 +105,35 @@ const RoutePlannerPanel = ({ onRouteGenerated, onRouteReset }) => {
     setError('');
 
     try {
-      // TODO: 调用IPC接口生成路线
-      // const result = await window.electron.ipcRenderer.invoke('scenic-guide:plan-route', {
-      //   interests,
-      //   duration,
-      //   crowd,
-      //   stamina,
-      //   specialNeeds
-      // });
-
-      // Mock延迟
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      const routeData = {
+      // 调用真实的IPC接口生成路线
+      const result = await desktopBridge.scenicGuide.planRoute({
         interests,
         duration,
         crowd,
         stamina,
-        specialNeeds,
-        timestamp: Date.now()
-      };
+        specialNeeds
+      });
 
-      if (onRouteGenerated) {
-        onRouteGenerated(routeData);
+      if (result.ok && result.data) {
+        const routeData = {
+          ...result.data,
+          interests,
+          duration,
+          crowd,
+          stamina,
+          specialNeeds,
+          timestamp: Date.now()
+        };
+
+        if (onRouteGenerated) {
+          onRouteGenerated(routeData);
+        }
+      } else {
+        setError(result?.error?.message || '路线生成失败，请重试');
       }
     } catch (err) {
       console.error('路线生成失败:', err);
-      setError('路线生成失败，请重试');
+      setError('路线生成失败，请确保在桌面应用中使用此功能');
     } finally {
       setLoading(false);
     }
@@ -310,10 +313,9 @@ const RoutePlannerPanel = ({ onRouteGenerated, onRouteReset }) => {
       </Paper>
 
       {/* 说明文字 */}
-      <Box sx={{ mt: 2, p: 2, backgroundColor: '#fff3e0', borderRadius: 2 }}>
+      <Box sx={{ mt: 2, p: 2, backgroundColor: '#e8f5e9', borderRadius: 2 }}>
         <Typography variant="caption" color="textSecondary">
-          💡 提示：选择至少一个兴趣偏好后点击"生成推荐路线"。系统将基于官方资料为您推荐最佳游览路线。
-          当前显示的是前端界面，实际路线生成由后端服务完成。
+          ✅ 路线规划已连接真实服务。系统将基于官方资料和您的偏好推荐最佳游览路线。
         </Typography>
       </Box>
     </Box>

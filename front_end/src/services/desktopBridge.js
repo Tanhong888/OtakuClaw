@@ -1140,6 +1140,117 @@ export const desktopBridge = {
         },
       });
     },
+    getEvaluationHistory() {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.getEvaluationHistory) {
+        return api.scenicGuide.getEvaluationHistory();
+      }
+      return Promise.resolve({
+        ok: false,
+        error: {
+          code: 'desktop_scenic_guide_unavailable',
+          message: 'Evaluation history is only available in the desktop app.',
+        },
+      });
+    },
+    runEvaluation(request = {}) {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.runEvaluation) {
+        return api.scenicGuide.runEvaluation(request);
+      }
+      return Promise.resolve({
+        ok: false,
+        error: {
+          code: 'desktop_scenic_guide_unavailable',
+          message: 'Evaluation service is only available in the desktop app.',
+        },
+      });
+    },
+    getAnalyticsDashboard(timeRange = {}) {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.getAnalyticsDashboard) {
+        return api.scenicGuide.getAnalyticsDashboard(timeRange);
+      }
+      return Promise.resolve({
+        ok: false,
+        error: {
+          code: 'desktop_scenic_guide_unavailable',
+          message: 'Analytics dashboard is only available in the desktop app.',
+        },
+      });
+    },
+    getHotQuestions(request = {}) {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.getHotQuestions) {
+        return api.scenicGuide.getHotQuestions(request);
+      }
+      return Promise.resolve({
+        ok: true,
+        data: [],
+      });
+    },
+    getSatisfactionTrend(timeRange = {}) {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.getSatisfactionTrend) {
+        return api.scenicGuide.getSatisfactionTrend(timeRange);
+      }
+      return Promise.resolve({
+        ok: true,
+        data: [],
+      });
+    },
+    planRoute(request = {}) {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.planRoute) {
+        return api.scenicGuide.planRoute(request);
+      }
+      return Promise.resolve({
+        ok: false,
+        error: {
+          code: 'desktop_scenic_guide_unavailable',
+          message: 'Route planning is only available in the desktop app.',
+        },
+      });
+    },
+    getRouteOptions() {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.getRouteOptions) {
+        return api.scenicGuide.getRouteOptions();
+      }
+      return Promise.resolve({
+        ok: true,
+        data: {
+          interests: ['历史文化', '自然风光', '亲子互动', '拍照打卡', '轻松休闲'],
+          crowds: ['solo', 'couple', 'family', 'elderly', 'team'],
+          stamina: ['easy', 'moderate', 'intensive'],
+        },
+      });
+    },
+    getInteractionLogs(filters = {}) {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.getInteractionLogs) {
+        return api.scenicGuide.getInteractionLogs(filters);
+      }
+      return Promise.resolve({
+        ok: true,
+        data: [],
+      });
+    },
+    getInteractionStatistics(timeRange = {}) {
+      const api = getDesktopApi();
+      if (api?.scenicGuide?.getInteractionStatistics) {
+        return api.scenicGuide.getInteractionStatistics(timeRange);
+      }
+      return Promise.resolve({
+        ok: true,
+        data: {
+          totalQuestions: 0,
+          uniqueVisitors: 0,
+          avgResponseTime: 0,
+          hitRate: 0,
+        },
+      });
+    },
   },
   office: {
     async getState() {

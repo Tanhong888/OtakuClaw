@@ -98,6 +98,33 @@ const scenicGuide = {
   askQuestion(request) {
     return ipcRenderer.invoke('scenic-guide:ask-question', request);
   },
+  getEvaluationHistory() {
+    return ipcRenderer.invoke('scenic-guide:get-evaluation-history');
+  },
+  runEvaluation(request) {
+    return ipcRenderer.invoke('scenic-guide:run-evaluation', request);
+  },
+  getAnalyticsDashboard(timeRange) {
+    return ipcRenderer.invoke('scenic-guide:get-analytics-dashboard', timeRange);
+  },
+  getHotQuestions(request) {
+    return ipcRenderer.invoke('scenic-guide:get-hot-questions', request);
+  },
+  getSatisfactionTrend(timeRange) {
+    return ipcRenderer.invoke('scenic-guide:get-satisfaction-trend', timeRange);
+  },
+  planRoute(request) {
+    return ipcRenderer.invoke('scenic-guide:plan-route', request);
+  },
+  getRouteOptions() {
+    return ipcRenderer.invoke('scenic-guide:get-route-options');
+  },
+  getInteractionLogs(filters) {
+    return ipcRenderer.invoke('scenic-guide:get-interaction-logs', filters);
+  },
+  getInteractionStatistics(timeRange) {
+    return ipcRenderer.invoke('scenic-guide:get-interaction-statistics', timeRange);
+  },
 };
 
 const appUpdater = {

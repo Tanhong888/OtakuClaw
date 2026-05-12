@@ -58,18 +58,22 @@ const { WindowModeManager } = require('./window/windowModeManager');
 const { TrayManager } = require('./window/trayManager');
 const { registerModeIpc } = require('./window/modeIpc');
 
-protocol.registerSchemesAsPrivileged([
-  {
-    scheme: MODEL_PROTOCOL,
-    privileges: {
-      standard: true,
-      secure: true,
-      supportFetchAPI: true,
-      corsEnabled: true,
-      stream: true,
+// 注册自定义协议方案（必须在 app.ready 之前调用）
+// 添加安全检查以确保在 Electron 环境中运行
+if (typeof protocol !== 'undefined' && protocol.registerSchemesAsPrivileged) {
+  protocol.registerSchemesAsPrivileged([
+    {
+      scheme: MODEL_PROTOCOL,
+      privileges: {
+        standard: true,
+        secure: true,
+        supportFetchAPI: true,
+        corsEnabled: true,
+        stream: true,
+      },
     },
-  },
-]);
+  ]);
+}
 
 let mainWindow = null;
 let disposeChatStreamHandlers = null;
