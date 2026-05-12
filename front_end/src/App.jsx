@@ -1122,8 +1122,10 @@ function AppContent({ desktopMode }) {
 
   const stageStyle = useMemo(
     () => ({
-      height: '100dvh',
-      minHeight: '100dvh',
+      height: '100vh',
+      minHeight: '100vh',
+      maxHeight: '100vh',
+      overflow: 'auto',
       transition: 'padding-right 220ms ease',
       paddingRight:
         (showConfigPanel || showChatPanel) && !isPetMode && !isNarrowViewport

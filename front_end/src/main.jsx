@@ -9,6 +9,7 @@ import {
   useThemeMode,
 } from './theme/ThemeModeContext.jsx';
 import './styles.css';
+import './styles-responsive.css';
 
 async function ensureLive2dCoreScript() {
   if (typeof window === 'undefined' || window.Live2DCubismCore) {

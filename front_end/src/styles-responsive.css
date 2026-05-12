@@ -1,0 +1,138 @@
+/**
+ * 响应式布局修复
+ * 解决桌面端和移动端的���示问题
+ */
+
+/* 强制启用滚动 */
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 桌面端优化 */
+@media (min-width: 981px) {
+  html,
+  body {
+    overflow: auto;
+  }
+
+  #root {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  /* 确保景区导览界面可以滚动 */
+  .scenic-guide-shell {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .scenic-guide-main {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .scenic-guide-content {
+    height: auto;
+    min-height: 500px;
+  }
+
+  /* 确保内容不会被截断 */
+  .scenic-guide-stage {
+    min-height: 400px;
+    height: auto;
+  }
+
+  .scenic-guide-side {
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+/* 移动端优化 */
+@media (max-width: 980px) {
+  html,
+  body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scenic-guide-shell {
+    overflow: auto;
+    height: 100dvh;
+    height: -webkit-fill-available;
+  }
+
+  .scenic-guide-main {
+    overflow: visible;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .scenic-guide-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 480px) {
+  .scenic-guide-main {
+    padding: 16px 12px 24px;
+  }
+
+  .scenic-guide-stage {
+    padding: 16px;
+    min-height: 350px;
+  }
+
+  .scenic-guide-avatar {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* 防止内容溢出 */
+.scenic-guide-shell * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 确保长内容可以滚动 */
+.scenic-guide-answer-panel {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.scenic-guide-answer-copy {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
