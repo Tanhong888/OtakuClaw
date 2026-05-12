@@ -150,7 +150,6 @@ function IFlyAvatarPlayer({ text, voiceId, avatarId, onPlayEnd, autoPlay = true 
               objectFit: 'contain',
             }}
             playsInline
-            webkit-playsinline
             onEnded={handleEnded}
             onPlay={handlePlay}
             onPause={handlePause}

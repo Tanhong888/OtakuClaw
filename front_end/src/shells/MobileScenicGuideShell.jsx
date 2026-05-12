@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Alert,
   Box,
@@ -11,7 +11,6 @@ import {
   Paper,
   Chip,
   Stack,
-  Fab,
 } from '@mui/material';
 import {
   Mic as MicIcon,
@@ -19,28 +18,17 @@ import {
   Route as RouteIcon,
   CameraAlt as CameraIcon,
   AdminPanelSettings as AdminIcon,
-  Close as CloseIcon,
   TravelExplore as ExploreIcon,
-  QuestionAnswer as QAIcon,
 } from '@mui/icons-material';
-import { useMediaQuery, useTheme } from '@mui/material/styles';
 import { desktopBridge } from '../../services/desktopBridge';
 import IFlyAvatarPlayer from '../avatar/IFlyAvatarPlayer.jsx';
 import './MobileScenicGuideShell.css';
 
 export default function MobileScenicGuideShell({
-  desktopMode = false,
-  platform = '',
   onOpenAdminPortal,
   initialManifest = null,
 }) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
-
-  const questionInputRef = useRef(null);
   const [manifest, setManifest] = useState(initialManifest);
-  const [loadingManifest, setLoadingManifest] = useState(true);
   const [questionText, setQuestionText] = useState('');
   const [askingQuestion, setAskingQuestion] = useState(false);
   const [answerResult, setAnswerResult] = useState(null);
