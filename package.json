@@ -16,9 +16,15 @@
     "desktop:build:mac": "pnpm run frontend:build && electron-builder --mac",
     "desktop:build:win": "pnpm run frontend:build && electron-builder --win --x64",
     "test:frontend": "pnpm --dir front_end exec vitest --run",
-    "test:desktop": "node --test desktop/electron/tests/*.test.js"
+    "test:desktop": "node --test desktop/electron/tests/*.test.js",
+    "android:build": "pnpm run frontend:build && cap build android",
+    "android:dev": "concurrently -k \"pnpm run frontend:dev\" \"cap run android\"",
+    "android:sync": "cap sync android",
+    "android:open": "cap open android"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.3.3",
+    "@capacitor/core": "^8.3.3",
     "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
     "electron": "^36.9.5",
@@ -96,6 +102,8 @@
     }
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.3",
+    "@capacitor/app": "^8.1.0",
     "electron-updater": "^6.8.3",
     "recharts": "^3.8.1",
     "ws": "^8.19.0"

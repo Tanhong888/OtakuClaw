@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 允许开发环境HTTP连接 -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- 生产环境配置 -->
+    <domain-config cleartextTrafficPermitted="false">
+        <!-- 添加您的生产域名 -->
+        <!-- <domain includeSubdomains="true">your-production-domain.com</domain> -->
+    </domain-config>
+
+    <!-- 本地开发配置 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain> <!-- Android模拟器 -->
+        <domain includeSubdomains="true">192.168.1.1</domain> <!-- 局域网 -->
+    </domain-config>
+</network-security-config>

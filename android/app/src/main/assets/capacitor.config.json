@@ -1,0 +1,28 @@
+{
+	"appId": "com.otakuclaw.scenicguide",
+	"appName": "灵山胜境AI导游",
+	"webDir": "front_end/dist",
+	"server": {
+		"androidScheme": "https"
+	},
+	"android": {},
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 2000,
+			"launchAutoHide": true,
+			"backgroundColor": "#f5f9ff",
+			"androidSplashResourceName": "splash",
+			"androidScaleType": "CENTER_CROP"
+		},
+		"Camera": {
+			"permissions": [
+				"camera"
+			]
+		},
+		"Microphone": {
+			"permissions": [
+				"microphone"
+			]
+		}
+	}
+}
