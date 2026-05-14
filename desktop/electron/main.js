@@ -27,6 +27,7 @@ const { registerScreenshotCaptureIpc } = require('./ipc/screenshotCapture');
 const { registerVoiceModelsIpc } = require('./ipc/voiceModels');
 const { DownloadInstallTaskManager } = require('./services/download/downloadInstallTaskManager');
 const { registerVoiceSessionIpc } = require('./ipc/voiceSession');
+const { registerIFlytekAvatarIpc } = require('./ipc/iflytekAvatar');
 const { createConversationRuntime } = require('./services/chat/conversationRuntime');
 const { createChatBackendManager } = require('./services/chat/backendManager');
 const { NanobotBackendAdapter } = require('./services/chat/backends/nanobotBackend');
@@ -54,6 +55,7 @@ const { AppUpdaterService } = require('./services/appUpdaterService');
 const { ScreenshotCaptureService } = require('./services/screenshotCaptureService');
 const { ScreenshotSelectionService } = require('./services/screenshotSelectionService');
 const { VoiceModelLibrary } = require('./services/voice/voiceModelLibrary');
+const { IFlytekAvatarService } = require('./services/iflytekAvatar/iflytekAvatarService');
 const { WindowModeManager } = require('./window/windowModeManager');
 const { TrayManager } = require('./window/trayManager');
 const { registerModeIpc } = require('./window/modeIpc');
@@ -89,6 +91,7 @@ let disposeNanobotSkillsHandlers = null;
 let disposeVoiceModelsHandlers = null;
 let disposeVoiceSessionHandlers = null;
 let disposeScreenshotCaptureHandlers = null;
+let disposeAvatarHandlers = null;
 let startChatStreamFromMain = null;
 let conversationRuntime = null;
 let officeStateStore = null;
@@ -117,6 +120,7 @@ let voiceModelLibrary = null;
 let downloadInstallTaskManager = null;
 let nanobotRuntimeManager = null;
 let nanobotSkillsLibrary = null;
+let iflytekAvatarService = null;
 let isQuitting = false;
 let chatBackendManager = null;
 let appUpdaterService = null;
@@ -763,6 +767,17 @@ async function bootstrap() {
     nanobotRuntimeManager,
   });
   await nanobotSkillsLibrary.init();
+
+  // Initialize iFlytek AI Avatar service
+  iflytekAvatarService = new IFlytekAvatarService({
+    apiUrl: process.env.IFLYTEK_AVATAR_API_URL,
+    apiKey: process.env.IFLYTEK_AVATAR_API_KEY,
+    appId: process.env.IFLYTEK_AVATAR_APP_ID,
+    apiSecret: process.env.IFLYTEK_AVATAR_API_SECRET,
+    voiceId: process.env.IFLYTEK_AVATAR_VOICE_ID,
+    avatarId: process.env.IFLYTEK_AVATAR_AVATAR_ID,
+  });
+
   chatBackendManager = createChatBackendManager({
     backends: [
       new NanobotBackendAdapter({
@@ -864,6 +879,10 @@ async function bootstrap() {
     getWindow: () => mainWindow,
     screenshotCaptureService,
     screenshotSelectionService,
+  });
+  disposeAvatarHandlers = registerIFlytekAvatarIpc({
+    ipcMain,
+    avatarService: iflytekAvatarService,
   });
   disposeNanobotRuntimeHandlers = registerNanobotRuntimeIpc({
     ipcMain,
@@ -1212,6 +1231,9 @@ app.on('before-quit', () => {
   }
   if (disposeScreenshotCaptureHandlers) {
     disposeScreenshotCaptureHandlers();
+  }
+  if (disposeAvatarHandlers) {
+    disposeAvatarHandlers();
   }
   if (disposeVoiceModelsHandlers) {
     disposeVoiceModelsHandlers();

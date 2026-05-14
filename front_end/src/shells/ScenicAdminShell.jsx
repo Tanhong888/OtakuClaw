@@ -18,10 +18,12 @@ import RouteRoundedIcon from '@mui/icons-material/RouteRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import TravelExploreRoundedIcon from '@mui/icons-material/TravelExploreRounded';
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
+import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded';
 import WindowTitleBar from '../components/window/WindowTitleBar.jsx';
 import AnalyticsDashboard from '../components/scenic/AnalyticsDashboard.jsx';
 import ScenicBigScreen from '../components/scenic/ScenicBigScreen.jsx';
 import EvalCenter from '../components/scenic/EvalCenter.jsx';
+import AvatarConfigPanel from '../components/scenic/AvatarConfigPanel.jsx';
 import { desktopBridge } from '../services/desktopBridge.js';
 import { hasImportedOfficialData } from './ScenicGuideShell.jsx';
 import './ScenicAdminShell.css';
@@ -246,6 +248,7 @@ export default function ScenicAdminShell({
             <Tab label="数据分析" value="analytics" />
             <Tab label="数据大屏" value="bigscreen" />
             <Tab label="评测中心" value="eval" />
+            <Tab label="数字人配置" value="avatar" />
           </Tabs>
         </Box>
 
@@ -329,6 +332,19 @@ export default function ScenicAdminShell({
 
         {/* 评测中心 */}
         {currentTab === 'eval' && <EvalCenter />}
+
+        {/* 数字人配置 */}
+        {currentTab === 'avatar' && (
+          <Box className="scenic-admin-grid">
+            <section className="scenic-admin-section scenic-admin-section--wide" aria-label="AI数字人配置">
+              <Box className="scenic-admin-section-heading">
+                <SmartToyRoundedIcon />
+                <h2>AI数字人配置</h2>
+              </Box>
+              <AvatarConfigPanel />
+            </section>
+          </Box>
+        )}
       </Box>
     </Box>
   );

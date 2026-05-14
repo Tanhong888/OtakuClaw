@@ -25,6 +25,7 @@ import RouteResultCard from '../components/scenic/RouteResultCard.jsx';
 import UIMultimodalLinkage from '../components/scenic/UIMultimodalLinkage.jsx';
 import AnswerFeedback from '../components/scenic/AnswerFeedback.jsx';
 import DigitalHumanState from '../components/scenic/DigitalHumanState.jsx';
+import UnifiedDigitalHumanPlayer from '../components/avatar/UnifiedDigitalHumanPlayer.jsx';
 import { useDigitalHumanState } from '../hooks/scenic/useDigitalHumanState.js';
 import { desktopBridge } from '../services/desktopBridge.js';
 import './ScenicGuideShell.css';
@@ -332,12 +333,14 @@ export default function ScenicGuideShell({
             <>
           <section className="scenic-guide-stage" aria-label="数字人导览台">
             <Box className="scenic-guide-avatar-panel">
-              <Box className="scenic-guide-avatar" aria-hidden="true">
-                <TravelExploreRoundedIcon />
-              </Box>
-              <Box className="scenic-guide-avatar-copy">
-                <h2>数字人讲解员</h2>
-                <p>{imported ? '灵山胜境资料已连接' : '等待官方资料连接'}</p>
+              <Box sx={{ width: '100%', height: '100%', minHeight: 220 }}>
+                <UnifiedDigitalHumanPlayer
+                  text={answerResult?.answer || ''}
+                  showTypeSelector={true}
+                  autoPlay={true}
+                  onModelLoaded={() => console.log('[ScenicGuideShell] Digital human loaded')}
+                  onModelError={(error) => console.error('[ScenicGuideShell] Digital human error:', error)}
+                />
               </Box>
             </Box>
 

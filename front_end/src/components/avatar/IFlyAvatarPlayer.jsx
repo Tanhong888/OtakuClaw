@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Box, CircularProgress, Alert, IconButton } from '@mui/material';
 import { VolumeUp, VolumeOff, PlayArrow } from '@mui/icons-material';
-import { iFlyAvatarService } from '../../services/iflyAvatar';
+import { desktopBridge } from '../../services/desktopBridge';
 
 /**
- * 科大讯飞AI虚拟人视频播放器
- * 用于Android APP展示AI数字人
+ * 科大讯飞AI虚拟人视频播放器 (Electron IPC版)
+ * 用于桌面端展示AI数字人，通过IPC调用主进程服务
  */
 function IFlyAvatarPlayer({ text, voiceId, avatarId, onPlayEnd, autoPlay = true }) {
   const videoRef = useRef(null);
@@ -27,11 +27,21 @@ function IFlyAvatarPlayer({ text, voiceId, avatarId, onPlayEnd, autoPlay = true 
     setError(null);
 
     try {
-      const url = await iFlyAvatarService.generateAvatarVideo({
+      const result = await desktopBridge.avatar.generateVideo({
         text: text.trim(),
         voiceId,
         avatarId,
       });
+
+      if (!result?.ok) {
+        throw new Error(result?.error?.message || '虚拟人视频生成失败');
+      }
+
+      // 支持视频URL或base64数据
+      const url = result.videoUrl || result.videoBase64;
+      if (!url) {
+        throw new Error('未返回视频数据');
+      }
 
       setVideoUrl(url);
       setLoading(false);
@@ -133,7 +143,7 @@ function IFlyAvatarPlayer({ text, voiceId, avatarId, onPlayEnd, autoPlay = true 
 
       {/* 错误状态 */}
       {error && (
-        <Alert severity="error" sx={{ position: 'absolute', zIndex: 10 }}>
+        <Alert severity="error" sx={{ position: 'absolute', zIndex: 10, mx: 2 }}>
           {error}
         </Alert>
       )}

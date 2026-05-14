@@ -2160,4 +2160,69 @@ export const desktopBridge = {
       return api.live2dModels.importZip();
     },
   },
+  avatar: {
+    async generateVideo(request = {}) {
+      const api = getDesktopApi();
+      if (!api?.avatar?.generateVideo) {
+        return {
+          ok: false,
+          error: {
+            code: 'desktop_avatar_unavailable',
+            message: 'AI虚拟人服务仅在桌面端可用。',
+          },
+        };
+      }
+      return api.avatar.generateVideo(request);
+    },
+    async getConfig() {
+      const api = getDesktopApi();
+      if (!api?.avatar?.getConfig) {
+        return {
+          ok: true,
+          config: {
+            configured: false,
+            apiUrl: '',
+            appId: '',
+            voiceId: 'xiaoyan',
+            avatarId: 'professional_female',
+          },
+        };
+      }
+      return api.avatar.getConfig();
+    },
+    async updateConfig(request = {}) {
+      const api = getDesktopApi();
+      if (!api?.avatar?.updateConfig) {
+        return {
+          ok: false,
+          error: {
+            code: 'desktop_avatar_unavailable',
+            message: 'AI虚拟人配置仅在桌面端可用。',
+          },
+        };
+      }
+      return api.avatar.updateConfig(request);
+    },
+    async listAvatars() {
+      const api = getDesktopApi();
+      if (!api?.avatar?.listAvatars) {
+        return { ok: true, avatars: [] };
+      }
+      return api.avatar.listAvatars();
+    },
+    async listVoices() {
+      const api = getDesktopApi();
+      if (!api?.avatar?.listVoices) {
+        return { ok: true, voices: [] };
+      }
+      return api.avatar.listVoices();
+    },
+    async checkHealth() {
+      const api = getDesktopApi();
+      if (!api?.avatar?.checkHealth) {
+        return { ok: true, healthy: false };
+      }
+      return api.avatar.checkHealth();
+    },
+  },
 };

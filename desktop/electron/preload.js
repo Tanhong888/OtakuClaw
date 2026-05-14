@@ -382,6 +382,27 @@ const voiceModels = {
   },
 };
 
+const avatar = {
+  generateVideo(request) {
+    return ipcRenderer.invoke('avatar:generate-video', request);
+  },
+  getConfig() {
+    return ipcRenderer.invoke('avatar:get-config');
+  },
+  updateConfig(request) {
+    return ipcRenderer.invoke('avatar:update-config', request);
+  },
+  listAvatars() {
+    return ipcRenderer.invoke('avatar:list-avatars');
+  },
+  listVoices() {
+    return ipcRenderer.invoke('avatar:list-voices');
+  },
+  checkHealth() {
+    return ipcRenderer.invoke('avatar:check-health');
+  },
+};
+
 contextBridge.exposeInMainWorld('desktop', {
   isElectron: true,
   platform: process.platform,
@@ -401,4 +422,5 @@ contextBridge.exposeInMainWorld('desktop', {
   voiceModels,
   capture,
   captureOverlay,
+  avatar,
 });
