@@ -53,15 +53,41 @@ function ThemedApp() {
         palette: {
           mode: resolvedThemeMode,
           primary: {
-            main: resolvedThemeMode === THEME_MODE_DARK ? '#60a5fa' : '#1976d2',
+            main: resolvedThemeMode === THEME_MODE_DARK ? '#60a5fa' : '#C23A30',
+            light: '#D4544A',
+            dark: '#A03028',
+            contrastText: '#FFFFFF',
+          },
+          secondary: {
+            main: resolvedThemeMode === THEME_MODE_DARK ? '#7dd3fc' : '#2B5F75',
+            light: '#4A7A8E',
+            dark: '#1E4555',
           },
           background: {
             default: 'transparent',
-            paper: resolvedThemeMode === THEME_MODE_DARK ? '#101826' : '#ffffff',
+            paper: resolvedThemeMode === THEME_MODE_DARK ? '#101826' : '#F7F3EB',
+          },
+          text: {
+            primary: '#2C2419',
+            secondary: '#5A5248',
           },
         },
         shape: {
-          borderRadius: 12,
+          borderRadius: 4,
+        },
+        typography: {
+          fontFamily: "'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif",
+          h1: { fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif" },
+          h2: { fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif" },
+          h3: { fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif" },
+          h4: { fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif" },
+          h5: { fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif" },
+          h6: { fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif" },
+          subtitle1: { fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif" },
+          button: {
+            fontFamily: "'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif",
+            letterSpacing: '0.06em',
+          },
         },
         components: {
           MuiCssBaseline: {

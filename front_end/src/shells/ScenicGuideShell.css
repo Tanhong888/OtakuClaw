@@ -1,12 +1,46 @@
+:root {
+  /* 中国传统色 - 禅意新中式 */
+  --scenic-ink: #2C2419;
+  --scenic-ink-light: #5A5248;
+  --scenic-ink-muted: #9A9488;
+  --scenic-paper: #F7F3EB;
+  --scenic-paper-warm: #F0EBE0;
+  --scenic-paper-cool: #E8E4DC;
+  --scenic-mountain: #D4E0D8;
+  --scenic-mountain-deep: #B8C8BE;
+  --scenic-cinnabar: #C23A30;
+  --scenic-cinnabar-light: #D4544A;
+  --scenic-cinnabar-dark: #A03028;
+  --scenic-stone: #2B5F75;
+  --scenic-stone-light: #4A7A8E;
+  --scenic-gold: #C9A961;
+  --scenic-gold-light: #D9C98A;
+  --scenic-gold-dim: #B8A878;
+  --scenic-amber: #B87333;
+  --scenic-jade: #5B8A72;
+  --scenic-jade-light: #7AAF8E;
+  --scenic-cloud: #F5F0E6;
+  --scenic-shadow: rgba(44, 36, 25, 0.08);
+  --scenic-shadow-deep: rgba(44, 36, 25, 0.14);
+
+  /* 字体 */
+  --font-serif: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', 'STSong', serif;
+  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+  --font-number: Georgia, 'Times New Roman', serif;
+}
+
 .scenic-guide-shell {
   position: relative;
   width: 100%;
   height: 100vh;
   min-height: 100vh;
   overflow: auto;
-  color: #172033;
+  color: var(--scenic-ink);
   background:
-    linear-gradient(135deg, rgba(237, 246, 243, 0.96) 0%, rgba(245, 248, 252, 0.98) 44%, rgba(232, 239, 250, 0.98) 100%);
+    radial-gradient(ellipse at 20% 0%, rgba(201, 169, 97, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(43, 95, 117, 0.04) 0%, transparent 50%),
+    linear-gradient(180deg, var(--scenic-paper) 0%, var(--scenic-paper-warm) 100%);
+  font-family: var(--font-sans);
 }
 
 /* 移动端使用dvh */
@@ -17,7 +51,22 @@
   }
 }
 
+/* 宣纸纹理效果 */
+.scenic-guide-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image:
+    repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(44, 36, 25, 0.02) 100px, rgba(44, 36, 25, 0.02) 101px),
+    repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(44, 36, 25, 0.02) 100px, rgba(44, 36, 25, 0.02) 101px);
+  z-index: 0;
+}
+
 .scenic-guide-main {
+  position: relative;
+  z-index: 1;
   min-height: 100%;
   max-width: 1440px;
   margin: 0 auto;
@@ -27,6 +76,7 @@
   gap: 18px;
 }
 
+/* Header - 中式匾额风格 */
 .scenic-guide-header {
   display: flex;
   align-items: center;
@@ -34,6 +84,19 @@
   gap: 18px;
   min-height: 68px;
   -webkit-app-region: drag;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--scenic-gold);
+  position: relative;
+}
+
+.scenic-guide-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--scenic-gold) 20%, var(--scenic-gold) 80%, transparent 100%);
 }
 
 .scenic-guide-brand {
@@ -50,10 +113,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  color: #0a6c74;
-  background: #d8f0eb;
-  border: 1px solid rgba(10, 108, 116, 0.24);
+  border-radius: 4px;
+  color: var(--scenic-cinnabar);
+  background: linear-gradient(135deg, rgba(194, 58, 48, 0.08) 0%, rgba(201, 169, 97, 0.12) 100%);
+  border: 1px solid rgba(201, 169, 97, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .scenic-guide-brand-mark svg {
@@ -68,27 +132,39 @@
 }
 
 .scenic-guide-brand h1 {
-  font-size: clamp(24px, 3vw, 34px);
-  line-height: 1.14;
-  font-weight: 800;
-  letter-spacing: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--scenic-ink);
 }
 
 .scenic-guide-brand p {
   margin-top: 5px;
-  font-size: 14px;
-  color: #526077;
+  font-size: 13px;
+  color: var(--scenic-ink-muted);
+  letter-spacing: 0.05em;
 }
 
 .scenic-guide-admin-button {
   width: 42px;
   height: 42px;
-  border: 1px solid rgba(20, 91, 100, 0.18);
-  color: #1a5876;
-  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(201, 169, 97, 0.5);
+  color: var(--scenic-stone);
+  background: linear-gradient(135deg, rgba(247, 243, 235, 0.9) 0%, rgba(240, 235, 224, 0.9) 100%);
   -webkit-app-region: no-drag;
+  border-radius: 4px;
+  transition: all 200ms ease;
 }
 
+.scenic-guide-admin-button:hover {
+  background: linear-gradient(135deg, rgba(201, 169, 97, 0.15) 0%, rgba(201, 169, 97, 0.08) 100%);
+  border-color: var(--scenic-gold);
+  transform: translateY(-1px);
+}
+
+/* 状态行 */
 .scenic-guide-status-row {
   min-height: 54px;
   display: flex;
@@ -101,17 +177,56 @@
 .scenic-guide-feedback {
   min-height: 48px;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 4px;
+  font-family: var(--font-sans);
 }
 
 .scenic-guide-alert {
   flex: 1 1 300px;
+  background: linear-gradient(135deg, rgba(91, 138, 114, 0.08) 0%, rgba(212, 224, 216, 0.3) 100%) !important;
+  border: 1px solid rgba(91, 138, 114, 0.25) !important;
+  color: var(--scenic-jade) !important;
+}
+
+.scenic-guide-alert .MuiAlert-icon {
+  color: var(--scenic-jade);
 }
 
 .scenic-guide-feedback {
   flex: 0 1 360px;
 }
 
+/* Tab 标签页 - 中式风格 */
+.scenic-guide-main .MuiTabs-root {
+  min-height: 44px;
+}
+
+.scenic-guide-main .MuiTabs-flexContainer {
+  border-bottom: 1px solid rgba(201, 169, 97, 0.3);
+}
+
+.scenic-guide-main .MuiTab-root {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--scenic-ink-muted);
+  text-transform: none;
+  min-height: 44px;
+  padding: 8px 20px;
+  position: relative;
+}
+
+.scenic-guide-main .MuiTab-root.Mui-selected {
+  color: var(--scenic-cinnabar);
+}
+
+.scenic-guide-main .MuiTabs-indicator {
+  background: linear-gradient(90deg, transparent, var(--scenic-cinnabar), transparent);
+  height: 2px;
+}
+
+/* 内容区域 */
 .scenic-guide-content {
   min-height: 400px;
   flex: 1;
@@ -127,29 +242,47 @@
   min-width: 0;
 }
 
+/* 主舞台 - 中式画卷风格 */
 .scenic-guide-stage {
   min-height: 440px;
   display: grid;
   grid-template-rows: minmax(220px, 1fr) auto auto;
   gap: 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(31, 83, 104, 0.18);
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow: 0 20px 48px rgba(24, 54, 78, 0.11);
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.3);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(247, 243, 235, 0.5) 100%);
+  box-shadow:
+    0 4px 20px var(--scenic-shadow),
+    0 1px 3px var(--scenic-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   padding: clamp(18px, 3vw, 30px);
   overflow: hidden;
+  position: relative;
 }
 
+.scenic-guide-stage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--scenic-gold) 0%, var(--scenic-cinnabar) 50%, var(--scenic-gold) 100%);
+  opacity: 0.6;
+}
+
+/* 数字人面板 - 禅意背景 */
 .scenic-guide-avatar-panel {
   position: relative;
   min-height: 280px;
   display: flex;
   align-items: stretch;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 4px;
   background:
-    linear-gradient(145deg, rgba(226, 243, 237, 0.88), rgba(245, 248, 251, 0.92) 56%, rgba(235, 231, 213, 0.72));
-  border: 1px solid rgba(45, 116, 107, 0.16);
+    radial-gradient(ellipse at 50% 0%, rgba(212, 224, 216, 0.5) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(247, 243, 235, 0.9) 0%, rgba(232, 228, 220, 0.6) 100%);
+  border: 1px solid rgba(201, 169, 97, 0.25);
   overflow: hidden;
   padding: 8px;
 }
@@ -161,10 +294,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: #f5fbff;
-  background:
-    linear-gradient(150deg, #0a6c74 0%, #267a5f 58%, #b79245 100%);
-  box-shadow: 0 18px 42px rgba(14, 76, 86, 0.22);
+  color: var(--scenic-paper);
+  background: linear-gradient(150deg, var(--scenic-stone) 0%, var(--scenic-jade) 58%, var(--scenic-gold) 100%);
+  box-shadow: 0 12px 32px rgba(43, 95, 117, 0.2);
 }
 
 .scenic-guide-avatar svg {
@@ -176,25 +308,29 @@
 }
 
 .scenic-guide-avatar-copy h2 {
-  font-size: clamp(22px, 3vw, 30px);
-  line-height: 1.2;
-  letter-spacing: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3vw, 28px);
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  color: var(--scenic-ink);
 }
 
 .scenic-guide-avatar-copy p {
   margin: 10px 0 0;
-  color: #526077;
-  font-size: 15px;
+  color: var(--scenic-ink-muted);
+  font-size: 14px;
+  letter-spacing: 0.03em;
 }
 
+/* 对话区域 */
 .scenic-guide-dialog-surface {
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding: 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(29, 72, 104, 0.14);
-  background: #fbfcff;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(245, 240, 230, 0.4) 100%);
 }
 
 .scenic-guide-dialog-heading,
@@ -202,13 +338,15 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #1a5876;
+  color: var(--scenic-stone);
   font-weight: 700;
+  font-family: var(--font-serif);
 }
 
 .scenic-guide-section-heading h2 {
-  font-size: 18px;
-  letter-spacing: 0;
+  font-size: 17px;
+  letter-spacing: 0.06em;
+  font-weight: 700;
 }
 
 .scenic-guide-prompt-row {
@@ -218,12 +356,14 @@
   justify-content: space-between;
   gap: 14px;
   padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(24, 78, 110, 0.14);
-  color: #344258;
-  background: #f3f8f8;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  color: var(--scenic-ink-light);
+  background: linear-gradient(135deg, rgba(247, 243, 235, 0.8) 0%, rgba(240, 235, 224, 0.6) 100%);
+  font-family: var(--font-sans);
 }
 
+/* 表单 */
 .scenic-guide-question-form {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -236,30 +376,65 @@
 }
 
 .scenic-guide-question-form .MuiOutlinedInput-root {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  font-family: var(--font-sans);
+}
+
+.scenic-guide-question-form .MuiOutlinedInput-root fieldset {
+  border-color: rgba(201, 169, 97, 0.3);
+}
+
+.scenic-guide-question-form .MuiOutlinedInput-root:hover fieldset {
+  border-color: rgba(201, 169, 97, 0.5);
+}
+
+.scenic-guide-question-form .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: var(--scenic-stone);
 }
 
 .scenic-guide-question-form .MuiButton-root {
   min-width: 120px;
-  border-radius: 8px;
+  border-radius: 4px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, var(--scenic-cinnabar) 0%, var(--scenic-cinnabar-light) 100%);
+  box-shadow: 0 4px 12px rgba(194, 58, 48, 0.25);
+  text-transform: none;
 }
 
+.scenic-guide-question-form .MuiButton-root:hover {
+  background: linear-gradient(135deg, var(--scenic-cinnabar-light) 0%, var(--scenic-cinnabar) 100%);
+  box-shadow: 0 6px 16px rgba(194, 58, 48, 0.35);
+  transform: translateY(-1px);
+}
+
+.scenic-guide-question-form .MuiButton-root:disabled {
+  background: rgba(154, 148, 136, 0.3);
+  box-shadow: none;
+  transform: none;
+}
+
+/* 回答面板 */
 .scenic-guide-answer-panel {
   min-height: 136px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(24, 78, 110, 0.14);
-  background: #f8fbfd;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(245, 240, 230, 0.3) 100%);
 }
 
 .scenic-guide-answer-copy p {
   margin: 0;
   white-space: pre-line;
-  color: #203048;
-  line-height: 1.68;
+  color: var(--scenic-ink);
+  line-height: 1.8;
+  font-family: var(--font-sans);
+  font-size: 15px;
 }
 
 .scenic-guide-answer-meta {
@@ -268,16 +443,27 @@
   gap: 8px;
 }
 
+.scenic-guide-answer-meta .MuiChip-root {
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  background: rgba(201, 169, 97, 0.12);
+  color: var(--scenic-ink-light);
+  border: 1px solid rgba(201, 169, 97, 0.25);
+}
+
 .scenic-guide-answer-placeholder {
   min-height: 104px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #58687c;
+  color: var(--scenic-ink-muted);
   text-align: center;
+  font-family: var(--font-sans);
 }
 
+/* 来源列表 */
 .scenic-guide-source-list {
   display: flex;
   flex-direction: column;
@@ -289,21 +475,31 @@
   flex-direction: column;
   gap: 6px;
   padding: 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(30, 83, 98, 0.12);
-  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(247, 243, 235, 0.4) 100%);
+  transition: all 200ms ease;
+}
+
+.scenic-guide-source-item:hover {
+  border-color: rgba(201, 169, 97, 0.4);
+  box-shadow: 0 2px 8px var(--scenic-shadow);
 }
 
 .scenic-guide-source-item strong {
   font-size: 14px;
-  color: #1c3852;
+  color: var(--scenic-stone);
+  font-family: var(--font-serif);
+  font-weight: 600;
 }
 
 .scenic-guide-source-item span {
-  color: #4f5d72;
-  line-height: 1.55;
+  color: var(--scenic-ink-light);
+  line-height: 1.6;
+  font-size: 13px;
 }
 
+/* 操作按钮 */
 .scenic-guide-actions {
   display: flex;
   align-items: center;
@@ -314,16 +510,28 @@
 .scenic-guide-action-button {
   width: 46px;
   height: 46px;
-  border: 1px solid rgba(20, 91, 100, 0.18);
-  background: #ffffff;
+  border: 1px solid rgba(201, 169, 97, 0.4);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(247, 243, 235, 0.6) 100%);
+  border-radius: 4px;
+  color: var(--scenic-stone);
+  transition: all 200ms ease;
 }
 
+.scenic-guide-action-button:hover {
+  background: linear-gradient(135deg, rgba(201, 169, 97, 0.15) 0%, rgba(201, 169, 97, 0.08) 100%);
+  border-color: var(--scenic-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--scenic-shadow);
+}
+
+/* 侧边栏 */
 .scenic-guide-side {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
+/* 统计卡片 - 中式匾额 */
 .scenic-guide-stat-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -337,28 +545,46 @@
   justify-content: space-between;
   gap: 8px;
   padding: 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(30, 83, 98, 0.16);
-  background: rgba(255, 255, 255, 0.84);
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(247, 243, 235, 0.5) 100%);
+  box-shadow: 0 2px 8px var(--scenic-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.scenic-guide-stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--scenic-gold), transparent);
+  opacity: 0.6;
 }
 
 .scenic-guide-stat-icon {
-  color: #0a6c74;
+  color: var(--scenic-cinnabar);
   display: inline-flex;
 }
 
 .scenic-guide-stat strong {
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(22px, 3vw, 28px);
   line-height: 1;
-  color: #172033;
+  color: var(--scenic-ink);
   letter-spacing: 0;
+  font-family: var(--font-number);
+  font-weight: 700;
 }
 
 .scenic-guide-stat span:last-child {
-  color: #59687b;
-  font-size: 13px;
+  color: var(--scenic-ink-muted);
+  font-size: 12px;
+  letter-spacing: 0.04em;
 }
 
+/* 面板 */
 .scenic-guide-tourist-panel,
 .scenic-guide-routes {
   flex: 1;
@@ -366,9 +592,23 @@
   flex-direction: column;
   gap: 16px;
   padding: 18px;
-  border-radius: 8px;
-  border: 1px solid rgba(30, 83, 98, 0.16);
-  background: rgba(255, 255, 255, 0.84);
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.25);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(247, 243, 235, 0.4) 100%);
+  box-shadow: 0 2px 12px var(--scenic-shadow);
+  position: relative;
+}
+
+.scenic-guide-tourist-panel::before,
+.scenic-guide-routes::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--scenic-gold), transparent);
+  opacity: 0.5;
 }
 
 .scenic-guide-route-list {
@@ -384,10 +624,16 @@
   justify-content: space-between;
   gap: 12px;
   padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(30, 83, 98, 0.12);
-  color: #29364a;
-  background: #f8faf8;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  color: var(--scenic-ink-light);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(245, 240, 230, 0.3) 100%);
+  transition: all 200ms ease;
+}
+
+.scenic-guide-route-item:hover {
+  border-color: rgba(201, 169, 97, 0.4);
+  background: linear-gradient(135deg, rgba(201, 169, 97, 0.08) 0%, rgba(201, 169, 97, 0.04) 100%);
 }
 
 .scenic-guide-route-button {
@@ -395,6 +641,9 @@
   cursor: pointer;
   font: inherit;
   text-align: left;
+  background: none;
+  border: none;
+  color: inherit;
 }
 
 .scenic-guide-route-button:disabled {
@@ -402,6 +651,48 @@
   opacity: 0.72;
 }
 
+.scenic-guide-route-item .MuiChip-root {
+  border-radius: 2px;
+  font-size: 11px;
+  background: rgba(91, 138, 114, 0.12);
+  color: var(--scenic-jade);
+  border: 1px solid rgba(91, 138, 114, 0.25);
+}
+
+/* Chip 全局调整 */
+.scenic-guide-shell .MuiChip-root {
+  border-radius: 2px;
+  font-family: var(--font-sans);
+}
+
+/* 数字人情感状态 */
+.scenic-guide-digital-human-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 169, 97, 0.25);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(247, 243, 235, 0.4) 100%);
+  overflow: auto;
+  max-height: 600px;
+  box-shadow: 0 2px 12px var(--scenic-shadow);
+  position: relative;
+}
+
+.scenic-guide-digital-human-state::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--scenic-gold), transparent);
+  opacity: 0.5;
+}
+
+/* 响应式 */
 @media (max-width: 980px) {
   .scenic-guide-main {
     overflow: auto;
@@ -417,7 +708,6 @@
   }
 }
 
-/* 桌面端优化 */
 @media (min-width: 981px) {
   .scenic-guide-main {
     overflow-y: auto;
@@ -456,23 +746,4 @@
   .scenic-guide-stat-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* Week 3 新增：数字人情感状态样式 */
-.scenic-guide-digital-human-state {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 18px;
-  border-radius: 8px;
-  border: 1px solid rgba(30, 83, 98, 0.16);
-  background: rgba(255, 255, 255, 0.84);
-  overflow: auto;
-  max-height: 600px;
-}
-
-/* Week 3 新增：前端UI联动和满意度反馈容器样式 */
-.scenic-guide-stage .MuiBox-root {
-  border-radius: 8px;
 }

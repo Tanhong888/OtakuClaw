@@ -110,12 +110,12 @@ const DigitalHumanState = ({ currentState, emotion, confidence = 0 }) => {
   const state = DIGITAL_HUMAN_STATES[currentState] || DIGITAL_HUMAN_STATES.IDLE;
 
   return (
-    <Box sx={{ p: 3, backgroundColor: '#fafafa', borderRadius: 2 }}>
+    <Box sx={{ p: 3, backgroundColor: 'transparent', borderRadius: 1 }}>
       {/* 标题 */}
       <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#1976d2' }}>
-            🎭 数字人情感状态
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#2B5F75', fontFamily: "'Noto Serif SC', 'SimSun', serif" }}>
+            数字人情感状态
           </Typography>
           <Typography variant="caption" color="textSecondary" sx={{ ml: 2 }}>
             状态机：{state.label}
@@ -137,9 +137,10 @@ const DigitalHumanState = ({ currentState, emotion, confidence = 0 }) => {
               p: 4,
               height: '100%',
               minHeight: 280,
-              backgroundColor: 'white',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-              borderRadius: 2,
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(247,243,235,0.6) 100%)',
+              boxShadow: '0 2px 12px rgba(44,36,25,0.08)',
+              borderRadius: 1,
+              border: '1px solid rgba(201,169,97,0.25)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -148,8 +149,8 @@ const DigitalHumanState = ({ currentState, emotion, confidence = 0 }) => {
               overflow: 'hidden',
               transition: 'all 0.3s ease',
               '&:hover': {
-                transform: 'translateY(-4px)',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 20px rgba(44,36,25,0.12)',
               },
             }}
           >
@@ -260,12 +261,13 @@ const DigitalHumanState = ({ currentState, emotion, confidence = 0 }) => {
               sx={{
                 p: 3,
                 flex: 1,
-                backgroundColor: 'white',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                borderRadius: 2,
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(247,243,235,0.6) 100%)',
+                boxShadow: '0 2px 8px rgba(44,36,25,0.06)',
+                borderRadius: 1,
+                border: '1px solid rgba(201,169,97,0.2)',
               }}
             >
-              <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
+              <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', mb: 2, fontFamily: "'Noto Serif SC', 'SimSun', serif", color: '#2B5F75' }}>
                 状态详情
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -309,12 +311,13 @@ const DigitalHumanState = ({ currentState, emotion, confidence = 0 }) => {
               sx={{
                 p: 3,
                 flex: 1,
-                backgroundColor: 'white',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                borderRadius: 2,
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(247,243,235,0.6) 100%)',
+                boxShadow: '0 2px 8px rgba(44,36,25,0.06)',
+                borderRadius: 1,
+                border: '1px solid rgba(201,169,97,0.2)',
               }}
             >
-              <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
+              <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', mb: 2, fontFamily: "'Noto Serif SC', 'SimSun', serif", color: '#2B5F75' }}>
                 情感检测规则
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -358,12 +361,13 @@ const DigitalHumanState = ({ currentState, emotion, confidence = 0 }) => {
           <Paper
             sx={{
               p: 3,
-              backgroundColor: 'white',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-              borderRadius: 2,
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(247,243,235,0.6) 100%)',
+              boxShadow: '0 2px 8px rgba(44,36,25,0.06)',
+              borderRadius: 1,
+              border: '1px solid rgba(201,169,97,0.2)',
             }}
           >
-            <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
+            <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', mb: 2, fontFamily: "'Noto Serif SC', 'SimSun', serif", color: '#2B5F75' }}>
               所有可用状态（9种）
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
@@ -388,11 +392,10 @@ const DigitalHumanState = ({ currentState, emotion, confidence = 0 }) => {
       </Grid>
 
       {/* 说明文字 */}
-      <Box sx={{ mt: 3, p: 2, backgroundColor: '#e3f2fd', borderRadius: 2 }}>
-        <Typography variant="caption" color="primary">
-          💡 <strong>数字人情感状态系统</strong>：根据回答内容自动检测情感，切换数字人的表情和动画。
+      <Box sx={{ mt: 3, p: 2, background: 'linear-gradient(135deg, rgba(43,95,117,0.06) 0%, rgba(212,224,232,0.2) 100%)', borderRadius: 1, border: '1px solid rgba(43,95,117,0.15)' }}>
+        <Typography variant="caption" sx={{ color: '#2B5F75', fontFamily: "'Noto Serif SC', 'SimSun', serif" }}>
+          <strong>数字人情感状态系统</strong>：根据回答内容自动检测情感，切换数字人的表情和动画。
           支持恭敬、愉快、推荐、抱歉、开心等多种情感状态，提升导览体验的沉浸感。
-          当前状态可通过useDigitalHumanState Hook管理和切换。
         </Typography>
       </Box>
     </Box>
