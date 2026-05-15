@@ -3,6 +3,7 @@ import {
   normalizeOfficeState,
   OFFICE_PRIMARY_AGENT_ID,
 } from '../components/office/officeSceneConfig.js';
+import { webScenicMock } from './webScenicMock.js';
 
 const SETTINGS_STORAGE_KEY = 'openclaw.settings';
 let webOfficeState = normalizeOfficeState();
@@ -1043,39 +1044,21 @@ export const desktopBridge = {
       if (api?.scenicGuide?.pickDataDirectory) {
         return api.scenicGuide.pickDataDirectory();
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Scenic guide directory picker is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.pickDataDirectory();
     },
     inspectDataDirectory(request = {}) {
       const api = getDesktopApi();
       if (api?.scenicGuide?.inspectDataDirectory) {
         return api.scenicGuide.inspectDataDirectory(request);
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Scenic guide data inspection is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.inspectDataDirectory(request);
     },
     importOfficialData(request = {}) {
       const api = getDesktopApi();
       if (api?.scenicGuide?.importOfficialData) {
         return api.scenicGuide.importOfficialData(request);
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Official scenic guide data import is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.importOfficialData(request);
     },
     getImportSummary() {
       const api = getDesktopApi();
@@ -1132,85 +1115,49 @@ export const desktopBridge = {
       if (api?.scenicGuide?.askQuestion) {
         return api.scenicGuide.askQuestion(request);
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Scenic guide question answering is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.askQuestion(request);
     },
     getEvaluationHistory() {
       const api = getDesktopApi();
       if (api?.scenicGuide?.getEvaluationHistory) {
         return api.scenicGuide.getEvaluationHistory();
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Evaluation history is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.getEvaluationHistory();
     },
     runEvaluation(request = {}) {
       const api = getDesktopApi();
       if (api?.scenicGuide?.runEvaluation) {
         return api.scenicGuide.runEvaluation(request);
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Evaluation service is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.runEvaluation(request);
     },
     getAnalyticsDashboard(timeRange = {}) {
       const api = getDesktopApi();
       if (api?.scenicGuide?.getAnalyticsDashboard) {
         return api.scenicGuide.getAnalyticsDashboard(timeRange);
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Analytics dashboard is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.getAnalyticsDashboard(timeRange);
     },
     getHotQuestions(request = {}) {
       const api = getDesktopApi();
       if (api?.scenicGuide?.getHotQuestions) {
         return api.scenicGuide.getHotQuestions(request);
       }
-      return Promise.resolve({
-        ok: true,
-        data: [],
-      });
+      return webScenicMock.getHotQuestions(request);
     },
     getSatisfactionTrend(timeRange = {}) {
       const api = getDesktopApi();
       if (api?.scenicGuide?.getSatisfactionTrend) {
         return api.scenicGuide.getSatisfactionTrend(timeRange);
       }
-      return Promise.resolve({
-        ok: true,
-        data: [],
-      });
+      return webScenicMock.getSatisfactionTrend(timeRange);
     },
     planRoute(request = {}) {
       const api = getDesktopApi();
       if (api?.scenicGuide?.planRoute) {
         return api.scenicGuide.planRoute(request);
       }
-      return Promise.resolve({
-        ok: false,
-        error: {
-          code: 'desktop_scenic_guide_unavailable',
-          message: 'Route planning is only available in the desktop app.',
-        },
-      });
+      return webScenicMock.planRoute(request);
     },
     getRouteOptions() {
       const api = getDesktopApi();
