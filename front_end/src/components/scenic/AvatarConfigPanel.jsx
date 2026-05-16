@@ -26,6 +26,7 @@ function AvatarConfigPanel() {
     type: DIGITAL_HUMAN_TYPE.LIVE2D,
     iflytekApiUrl: '',
     iflytekApiKey: '',
+    iflytekApiSecret: '',
     iflytekAppId: '',
     voiceId: 'xiaoyan',
     avatarId: 'professional_female',
@@ -45,6 +46,8 @@ function AvatarConfigPanel() {
             ...prev,
             type: digitalHumanConfig.getType(),
             iflytekApiUrl: result.config.apiUrl || '',
+            iflytekApiKey: result.config.apiKey || '',
+            iflytekApiSecret: result.config.apiSecret || '',
             iflytekAppId: result.config.appId || '',
             voiceId: result.config.voiceId || 'xiaoyan',
             avatarId: result.config.avatarId || 'professional_female',
@@ -77,6 +80,7 @@ function AvatarConfigPanel() {
         digitalHumanConfig.updateIflytekConfig({
           apiUrl: config.iflytekApiUrl,
           apiKey: config.iflytekApiKey,
+          apiSecret: config.iflytekApiSecret,
           appId: config.iflytekAppId,
           voiceId: config.voiceId,
           avatarId: config.avatarId,
@@ -87,6 +91,7 @@ function AvatarConfigPanel() {
         await desktopBridge.avatar.updateConfig({
           apiUrl: config.iflytekApiUrl,
           apiKey: config.iflytekApiKey,
+          apiSecret: config.iflytekApiSecret,
           appId: config.iflytekAppId,
           voiceId: config.voiceId,
           avatarId: config.avatarId,
@@ -224,6 +229,15 @@ function AvatarConfigPanel() {
             placeholder="your-api-key"
             value={config.iflytekApiKey}
             onChange={handleChange('iflytekApiKey')}
+            fullWidth
+            type="password"
+          />
+
+          <TextField
+            label="API Secret"
+            placeholder="your-api-secret"
+            value={config.iflytekApiSecret}
+            onChange={handleChange('iflytekApiSecret')}
             fullWidth
             type="password"
           />

@@ -27,6 +27,7 @@ class DigitalHumanConfig {
         enabled: false,
         apiUrl: '',  // 后端API地址，如 http://localhost:8000/api/avatar
         apiKey: '',
+        apiSecret: '',
         appId: '',
         voiceId: 'xiaoyan',
         avatarId: 'professional_female'
@@ -116,7 +117,7 @@ class DigitalHumanConfig {
    */
   isIflytekConfigured() {
     const cfg = this.config.iflytek;
-    return cfg.enabled && cfg.apiUrl && cfg.apiKey && cfg.appId;
+    return cfg.enabled && cfg.apiUrl && cfg.apiKey && cfg.apiSecret && cfg.appId;
   }
 
   /**
