@@ -2110,14 +2110,21 @@ export const desktopBridge = {
   avatar: {
     async generateVideo(request = {}) {
       const api = getDesktopApi();
+      // Web端：直接通过 iflyAvatar 服务调用后端 API
       if (!api?.avatar?.generateVideo) {
-        return {
-          ok: false,
-          error: {
-            code: 'desktop_avatar_unavailable',
-            message: 'AI虚拟人服务仅在桌面端可用。',
-          },
-        };
+        try {
+          const { iFlyAvatarService } = await import('./iflyAvatar.js');
+          const videoData = await iFlyAvatarService.generateAvatarVideo(request);
+          return { ok: true, videoUrl: videoData };
+        } catch (error) {
+          return {
+            ok: false,
+            error: {
+              code: 'avatar_api_error',
+              message: error?.message || 'AI虚拟人视频生成失败',
+            },
+          };
+        }
       }
       return api.avatar.generateVideo(request);
     },
@@ -2140,34 +2147,67 @@ export const desktopBridge = {
     async updateConfig(request = {}) {
       const api = getDesktopApi();
       if (!api?.avatar?.updateConfig) {
-        return {
-          ok: false,
-          error: {
-            code: 'desktop_avatar_unavailable',
-            message: 'AI虚拟人配置仅在桌面端可用。',
-          },
-        };
+        try {
+          const { iFlyAvatarService } = await import('./iflyAvatar.js');
+          const avatars = await iFlyAvatarService.getAvatarList();
+          const voices = await iFlyAvatarService.getVoiceList();
+          return {
+            ok: true,
+            config: {
+              ...request,
+              configured: true,
+              avatars,
+              voices,
+            },
+          };
+        } catch (error) {
+          return {
+            ok: false,
+            error: {
+              code: 'avatar_api_error',
+              message: error?.message || 'AI虚拟人配置保存失败',
+            },
+          };
+        }
       }
       return api.avatar.updateConfig(request);
     },
     async listAvatars() {
       const api = getDesktopApi();
       if (!api?.avatar?.listAvatars) {
-        return { ok: true, avatars: [] };
+        try {
+          const { iFlyAvatarService } = await import('./iflyAvatar.js');
+          const avatars = await iFlyAvatarService.getAvatarList();
+          return { ok: true, avatars };
+        } catch (error) {
+          return { ok: true, avatars: [] };
+        }
       }
       return api.avatar.listAvatars();
     },
     async listVoices() {
       const api = getDesktopApi();
       if (!api?.avatar?.listVoices) {
-        return { ok: true, voices: [] };
+        try {
+          const { iFlyAvatarService } = await import('./iflyAvatar.js');
+          const voices = await iFlyAvatarService.getVoiceList();
+          return { ok: true, voices };
+        } catch (error) {
+          return { ok: true, voices: [] };
+        }
       }
       return api.avatar.listVoices();
     },
     async checkHealth() {
       const api = getDesktopApi();
       if (!api?.avatar?.checkHealth) {
-        return { ok: true, healthy: false };
+        try {
+          const { iFlyAvatarService } = await import('./iflyAvatar.js');
+          const healthy = await iFlyAvatarService.checkServiceHealth();
+          return { ok: true, healthy };
+        } catch (error) {
+          return { ok: true, healthy: false };
+        }
       }
       return api.avatar.checkHealth();
     },

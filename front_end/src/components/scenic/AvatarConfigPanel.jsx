@@ -118,17 +118,44 @@ function AvatarConfigPanel() {
     setFeedback(null);
 
     try {
-      const result = await desktopBridge.avatar.checkHealth();
-      if (result?.ok && result.healthy) {
+      // 桌面端：通过主进程测试
+      if (desktopBridge.isDesktop()) {
+        const result = await desktopBridge.avatar.checkHealth();
+        if (result?.ok && result.healthy) {
+          setFeedback({
+            severity: 'success',
+            text: 'AI虚拟人服务连接正常',
+          });
+          setHealthStatus('healthy');
+        } else {
+          setFeedback({
+            severity: 'warning',
+            text: 'AI虚拟人服务未连接，请检查配置',
+          });
+          setHealthStatus('unhealthy');
+        }
+        return;
+      }
+
+      // Web 端：直接测试科大讯飞 API 连通性
+      const { iFlyAvatarService } = await import('../../services/iflyAvatar.js');
+      const result = await iFlyAvatarService.testIflytekConnection({
+        apiUrl: config.iflytekApiUrl,
+        appId: config.iflytekAppId,
+        apiKey: config.iflytekApiKey,
+        apiSecret: config.iflytekApiSecret,
+      });
+
+      if (result.healthy) {
         setFeedback({
           severity: 'success',
-          text: 'AI虚拟人服务连接正常',
+          text: result.message || '科大讯飞 AI 虚拟人服务连接正常',
         });
         setHealthStatus('healthy');
       } else {
         setFeedback({
           severity: 'warning',
-          text: 'AI虚拟人服务未连接，请检查配置',
+          text: result.message || '连接失败，请检查配置',
         });
         setHealthStatus('unhealthy');
       }
@@ -141,7 +168,7 @@ function AvatarConfigPanel() {
     } finally {
       setTesting(false);
     }
-  }, []);
+  }, [config]);
 
   const getHealthChip = () => {
     switch (healthStatus) {

@@ -126,7 +126,7 @@ class IFlyAvatarService {
   }
 
   /**
-   * 检查服务是否可用
+   * 检查后端服务是否可用
    * @returns {Promise<boolean>} 服务是否可用
    */
   async checkServiceHealth() {
@@ -137,6 +137,96 @@ class IFlyAvatarService {
       return response.ok;
     } catch {
       return false;
+    }
+  }
+
+  /**
+   * 测试科大讯飞 API 连通性（直接连接）
+   * 使用 WebSocket 方式测试认证是否通过
+   * @param {Object} credentials - 认证凭证
+   * @param {string} credentials.apiUrl - WebSocket API 地址
+   * @param {string} credentials.appId - App ID
+   * @param {string} credentials.apiKey - API Key
+   * @param {string} credentials.apiSecret - API Secret
+   * @returns {Promise<{ok: boolean, healthy: boolean, message?: string}>}
+   */
+  async testIflytekConnection(credentials = {}) {
+    const { apiUrl, appId, apiKey, apiSecret } = credentials;
+
+    if (!apiUrl || !appId || !apiKey || !apiSecret) {
+      return {
+        ok: false,
+        healthy: false,
+        message: '请填写完整的 API 地址、App ID、API Key 和 API Secret',
+      };
+    }
+
+    // 构建 WebSocket URL 并添加认证参数（科大讯飞标准认证方式）
+    const url = new URL(apiUrl);
+    const date = new Date().toUTCString();
+
+    // 使用 Web Crypto API 生成 HMAC-SHA256 签名
+    const signatureOrigin = `host: ${url.host}\ndate: ${date}\nGET ${url.pathname} HTTP/1.1`;
+    try {
+      const encoder = new TextEncoder();
+      const keyData = encoder.encode(apiSecret);
+      const messageData = encoder.encode(signatureOrigin);
+
+      const cryptoKey = await crypto.subtle.importKey(
+        'raw',
+        keyData,
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign']
+      );
+      const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+      const signature = btoa(String.fromCharCode(...new Uint8Array(signatureBuffer)));
+
+      const authorizationOrigin = `api_key="${apiKey}", algorithm="hmac-sha256", headers="host date request-line", signature="${signature}"`;
+      const authorization = btoa(authorizationOrigin);
+
+      url.searchParams.set('authorization', authorization);
+      url.searchParams.set('date', date);
+      url.searchParams.set('host', url.host);
+
+      // 尝试建立 WebSocket 连接并验证
+      return new Promise((resolve) => {
+        const ws = new WebSocket(url.toString());
+        const timeout = setTimeout(() => {
+          ws.close();
+          resolve({
+            ok: true,
+            healthy: false,
+            message: '连接超时，请检查网络或 API 地址',
+          });
+        }, 10000);
+
+        ws.onopen = () => {
+          clearTimeout(timeout);
+          ws.close();
+          resolve({
+            ok: true,
+            healthy: true,
+            message: '科大讯飞 AI 虚拟人服务连接正常',
+          });
+        };
+
+        ws.onerror = () => {
+          clearTimeout(timeout);
+          ws.close();
+          resolve({
+            ok: true,
+            healthy: false,
+            message: '连接失败，请检查 API 地址和认证信息',
+          });
+        };
+      });
+    } catch (error) {
+      return {
+        ok: false,
+        healthy: false,
+        message: error?.message || '认证签名生成失败',
+      };
     }
   }
 }
