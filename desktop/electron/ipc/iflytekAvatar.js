@@ -84,7 +84,7 @@ function registerIFlytekAvatarIpc({ ipcMain, avatarService }) {
         };
       }
 
-      avatarService.updateConfig(request);
+      await avatarService.updateConfig(request);
 
       return {
         ok: true,
