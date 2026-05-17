@@ -64,7 +64,9 @@ async function extractTarArchive({ archivePath, destinationDir }) {
     if (error?.code === 'ENOENT') {
       throw createPythonRuntimeError(
         'python_runtime_extract_tool_missing',
-        'Missing tar command. Please install tar first.',
+        process.platform === 'win32'
+          ? 'Windows 缺少 tar 解压工具。Windows 10/11 用户请确保系统更新到最新版本（内置 tar）。或使用 Git Bash、MSYS2 等工具。'
+          : 'Missing tar command. Please install tar first.',
       );
     }
 

@@ -86,14 +86,20 @@ async function downloadFileFromUrl({ url, destinationPath, onProgress }) {
 
 async function extractTarArchive({ archivePath, destinationDir }) {
   await fsp.mkdir(destinationDir, { recursive: true });
+
+  // On Windows, try built-in tar first (available in Windows 10+), fallback to error
   try {
     await execFileAsync('tar', ['-xf', archivePath, '-C', destinationDir]);
   } catch (error) {
+    if (error?.code === 'ENOENT' && process.platform === 'win32') {
+      throw createRuntimeError(
+        'nanobot_runtime_install_failed',
+        'Windows 缺少 tar 解压工具。请安装 Windows 版 tar 或使用 Windows 10/11 内置的 tar（在 PowerShell 或 CMD 中运行 tar 命令测试）。',
+      );
+    }
     throw createRuntimeError(
       'nanobot_runtime_install_failed',
-      error?.code === 'ENOENT'
-        ? 'Missing tar command. Please install tar first.'
-        : `Failed to extract Nanobot archive: ${error?.message || 'unknown error'}`,
+      `Failed to extract Nanobot archive: ${error?.message || 'unknown error'}`,
     );
   }
 }
